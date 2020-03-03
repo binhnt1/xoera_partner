@@ -1,0 +1,156 @@
+<grid-heading [tools]="tools" [actions]="actions"></grid-heading>
+<div class="kt-portlet__body">
+    <div class="tableWapper">
+        <div class="tableSection">
+            <table *ngIf="headers && headers.length > 0 && items" class="table table-striped table-bordered table-hover table-checkable dataTable">
+                <thead (clickOutside)="toggleFilterMenu()">
+                    <tr role="row" class="heading">
+                        <th *ngFor="let decorator of headers" style="vertical-align: middle;" class="gridHeader" [ngClass]="{
+                                        'sorting':decorator.allowSort, 
+                                        'sorting_asc':decorator.orderData && decorator.orderData.type == OrderType.Asc,
+                                        'sorting_desc':decorator.orderData && decorator.orderData.type == OrderType.Desc
+                                    }">
+                            <span (click)="sort(decorator)"> {{decorator.label}} </span>
+                            <div class="btn-group filter" [ngClass]="{'active': decorator.filterData && (decorator.filterData.value != null || decorator.filterData.value1 != null)}">
+                                <span (click)="toggleFilterMenu(decorator)">
+                                    <i class="la la-filter"></i>
+                                </span>
+                                <div class="dropdown-menu header-filter portlet light active">
+                                    <div class="kt-portlet__body" *ngIf="decorator.property == selectedFilter">
+                                        <ul class="nav nav-tabs  nav-tabs-line nav-tabs-line-success" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link" (click)="activeTab(decorator, 'basic')" [ngClass]="{'active':activedTab[decorator.property] == 'basic'}"> Basic </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" (click)="activeTab(decorator, 'advance')" [ngClass]="{'active':activedTab[decorator.property] == 'advance'}"> Advance </a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div class="tab-pane" [ngClass]="{'active':activedTab[decorator.property] == 'basic'}">
+                                                <editor *ngIf="decorator.dataType != DataType.DropDown" [(object)]="decorator.filterData" property="value" [decorator]="{ 
+                                                        label: '',
+                                                        grid: '0-12',
+                                                        multiple: true,
+                                                        editable: true, 
+                                                        reference: target, 
+                                                        type: DropDownType.List,
+                                                        dataType: DataType.DropDown, 
+                                                        propertyValue: decorator.column,
+                                                        propertyDisplay: [decorator.column],
+                                                        layoutType: DropdownLayoutType.Columns
+                                                    }">
+                                                </editor>
+                                                <editor *ngIf="decorator.dataType == DataType.DropDown" [(object)]="decorator.filterData" property="value" [decorator]="{ 
+                                                        label: '',
+                                                        grid: '0-12',
+                                                        multiple: true,
+                                                        editable: true,  
+                                                        type: DropDownType.List,
+                                                        dataType: DataType.DropDown,
+                                                        reference: decorator.reference,
+                                                        propertyValue: decorator.propertyDisplay,
+                                                        propertyDisplay: [decorator.propertyDisplay]
+                                                    }">
+                                                </editor>
+                                            </div>
+                                            <div class="tab-pane" [ngClass]="{'active':activedTab[decorator.property] == 'advance'}">
+                                                <ul class="grid-column-menu">
+                                                    <li>
+                                                        <label>Property</label>
+                                                        <editor [(object)]="decorator.filterData" property="name" [decorator]="{ label: '', editable: false }"></editor>
+                                                    </li>
+                                                    <li [ngSwitch]="decorator.dataType">
+                                                        <label>Compare</label>
+                                                        <editor *ngSwitchCase="DataType.Boolean" [(object)]="decorator.filterData" property="compare" [decorator]="{ label: '', grid:'3-9', data: boolFilterTypes }"></editor>
+                                                        <editor *ngSwitchCase="DataType.Number" [(object)]="decorator.filterData" property="compare" [decorator]="{ label: '', grid:'3-9', data: numberFilterTypes }"></editor>
+                                                        <editor *ngSwitchCase="DataType.String" [(object)]="decorator.filterData" property="compare" [decorator]="{ label: '', grid:'3-9', data: stringFilterTypes }"></editor>
+                                                        <editor *ngSwitchCase="DataType.DropDown" [(object)]="decorator.filterData" property="compare" [decorator]="{ label: '', grid:'3-9', data: foreignFilterTypes }"></editor>
+                                                        <editor *ngSwitchCase="DataType.DateTime" [(object)]="decorator.filterData" property="compare" [decorator]="{ label: '', grid:'3-9', data: datetimeFilterTypes }"></editor>
+                                                    </li>
+                                                    <li [ngSwitch]="decorator.dataType">
+                                                        <editor *ngSwitchCase="DataType.DropDown" [(object)]="decorator.filterData" property="value1" [decorator]="decorator"></editor>
+                                                        <editor *ngSwitchCase="DataType.DateTime" [(object)]="decorator.filterData" property="value1" [decorator]="decorator"></editor>
+                                                        <div *ngSwitchCase="DataType.Number" [ngSwitch]="decorator.filterData.compare">
+                                                            <editor *ngSwitchCase="CompareType.N_Equals" [(object)]="decorator.filterData" property="value1" [decorator]="{ grid:'3-9', label: '', dataType: DataType.Number }"></editor>
+                                                            <editor *ngSwitchCase="CompareType.N_LessThan" [(object)]="decorator.filterData" property="value1" [decorator]="{ grid:'3-9', label: '', dataType: DataType.Number }"></editor>
+                                                            <editor *ngSwitchCase="CompareType.N_Contains" [(object)]="decorator.filterData" property="value1" [decorator]="{ grid:'3-9', label: '', dataType: DataType.String }"></editor>
+                                                            <editor *ngSwitchCase="CompareType.N_NotEquals" [(object)]="decorator.filterData" property="value1" [decorator]="{ grid:'3-9', label: '', dataType: DataType.Number }"></editor>
+                                                            <editor *ngSwitchCase="CompareType.N_NotContains" [(object)]="decorator.filterData" property="value1" [decorator]="{ grid:'3-9', label: '', dataType: DataType.String }"></editor>
+                                                            <editor *ngSwitchCase="CompareType.N_GreaterThan" [(object)]="decorator.filterData" property="value1" [decorator]="{ grid:'3-9', label: '', dataType: DataType.Number }"></editor>
+                                                            <editor *ngSwitchCase="CompareType.N_LessThanOrEqual" [(object)]="decorator.filterData" property="value1" [decorator]="{ grid:'3-9', label: '', dataType: DataType.Number }"></editor>
+                                                            <editor *ngSwitchCase="CompareType.N_GreaterThanOrEqual" [(object)]="decorator.filterData" property="value1" [decorator]="{ grid:'3-9', label: '', dataType: DataType.Number }"></editor>
+                                                            <div *ngSwitchCase="CompareType.N_Between" style="display: flex; flex-direction: column;">
+                                                                <editor [(object)]="decorator.filterData" property="value1" [decorator]="{ grid:'3-9', label: '', dataType: DataType.Number }"></editor>
+                                                                <editor [(object)]="decorator.filterData" property="value2" [decorator]="{ grid:'3-9', label: '', dataType: DataType.Number }"></editor>
+                                                            </div>
+                                                            <div *ngSwitchCase="CompareType.N_NotBetween" style="display: flex; flex-direction: column;">
+                                                                <editor [(object)]="decorator.filterData" property="value1" [decorator]="{ grid:'3-9', label: '', dataType: DataType.Number }"></editor>
+                                                                <editor [(object)]="decorator.filterData" property="value2" [decorator]="{ grid:'3-9', label: '', dataType: DataType.Number }"></editor>
+                                                            </div>
+                                                        </div>
+                                                        <editor *ngSwitchCase="DataType.String" [(object)]="decorator.filterData" property="value1" [decorator]="{ grid:'3-9', label: '', dataType: DataType.String, type: decorator.type }"></editor>
+                                                        <editor *ngSwitchCase="DataType.Boolean" [(object)]="decorator.filterData" property="value1" [decorator]="{ grid:'3-9', label: '', dataType: DataType.DropDown, enumType: FilterBoolType, multiple: true }"></editor>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="btn-group">
+                                            <span>
+                                                <button class="btn btn-primary" (click)="filter(decorator)"> OK <i class="glyphicon glyphicon-ok"></i></button>
+                                            </span>
+                                            <span>
+                                                <button class="btn btn-warning" (click)="resetFilter(decorator)"> Reset <i class="glyphicon glyphicon-refresh"></i></button>
+                                            </span>
+                                            <span>
+                                                <button class="btn btn-default" (click)="closeFilterMenu()"> Cancel <i class="glyphicon glyphicon-remove"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="gridHeader" [width]="'10%'" style="vertical-align: middle;" [ngClass]="{'sorting':false}">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="data" *ngFor="let item of items">
+                        <td *ngFor="let decorator of decorators">
+                            <editor *ngIf="item" [object]="item" [decorator]="decorator"></editor>
+                        </td>
+                        <td>
+                            <grid-action *ngIf="item" [object]="item" [property]="primaryKey" [controller]="controller"></grid-action>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <mvc-loading-component [text]="Loading" [overlay]="false" *ngIf="loading"></mvc-loading-component>
+        <div class="row" style="margin-top: 10px;" *ngIf="headers && headers.length > 0 && pagingData">
+            <div class="col-md-6 col-sm-12">
+                <div class="dataTables_info">
+                    <label>Showing {{from}} to {{to}} of {{pagingData.total}} records</label>
+                    <label class="dropdownWapper dataTables_length">
+                        <span>View</span>&nbsp;&nbsp;
+                        <select id="page_size_select" data-width="60px" class="form-custom-select custom-select-sm form-control">
+                            <option *ngFor="let item of sizes" [value]="item.key" [selected]="item.key == size">{{item.value}}</option>
+                        </select>&nbsp;&nbsp;
+                        <span>records</span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="dataTables_paginate paging_simple_numbers">
+                    <ul class="pagination" style="justify-content: flex-end;">
+                        <li class="paginate_button page-item previous" *ngIf="pagingData.index > 1"><a class="page-link" title="First" (click)="paging(1)"><i class="la la-angle-double-left"></i></a></li>
+                        <li class="paginate_button page-item previous" *ngIf="pagingData.index > 1"><a class="page-link" title="Prev" (click)="paging(pagingData.index - 1)"><i class="la la-angle-left"></i></a></li>
+                        <li class="paginate_button page-item" [ngClass]="{'active':pagingData.index == item}" *ngFor="let item of numbers">
+                            <a class="page-link" (click)="paging(item)">{{ item }}</a>
+                        </li>
+                        <li class="paginate_button page-item next" *ngIf="pagingData.pages > pagingData.index"><a class="page-link" title="Next" (click)="paging(pagingData.index + 1)"><i class="la la-angle-right"></i></a></li>
+                        <li class="paginate_button page-item next" *ngIf="pagingData.pages > pagingData.index"><a class="page-link" title="Last" (click)="paging(pagingData.pages)"><i class="la la-angle-double-right"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

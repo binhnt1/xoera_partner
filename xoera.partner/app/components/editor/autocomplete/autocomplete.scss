@@ -1,0 +1,129 @@
+.autocompleteWapper {
+    position: relative;
+
+    .ui-autocomplete-input {
+        padding-left: 12px;
+
+        &.hasIcon {
+            padding-left: 50px;
+        }
+    }
+
+    .ui-autocomplete-panel {
+        z-index: 2;
+        opacity: 0;
+        width: 100%;
+        display: none;
+        position: absolute;
+        pointer-events: none;
+        transition: all 0.5s;
+
+        &.active {
+            opacity: 1;
+            display: block;
+            pointer-events: all;
+        }
+
+        .ui-autocomplete-list-item {
+            display: flex;
+            padding: 6px 10px;
+            align-items: center;
+            justify-content: flex-start;
+
+            .item-template-icon {
+                width: 24px;
+                height: auto;
+                margin-right: 10px;
+            }
+        }
+    }
+
+    &.error {
+        input {
+            border: 1px solid red;
+        }
+    }
+
+    input.edited.haslabel {
+        padding-top: 26px;
+
+        &~label {
+            top: 12px;
+            opacity: 1;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+    }
+}
+
+.hint-invalid {
+    color: red;
+}
+
+.ui-autocomplete {
+    width: 100% !important;
+
+    .ui-autocomplete-panel {
+        min-width: 100%;
+        font-size: 16px;
+        overflow-x: hidden;
+        width: 100% !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        min-width: calc(100% - 17px);
+    }
+
+    .ui-autocomplete-dropdown {
+        top: 1px;
+        width: 50px !important;
+        height: 43px !important;
+    }
+
+    input {
+        display: none;
+        padding-left: 45px;
+        padding-right: 90px;
+
+        &.active {
+            display: block;
+        }
+    }
+}
+
+.ui-autocomplete-list {
+    z-index: 1;
+    overflow-y: auto;
+    max-height: 350px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0px 0px 50px 0px rgba(82, 63, 105, 0.15);
+
+    .ui-autocomplete-list-item {
+        cursor: pointer;
+
+        .ui-icon-template {
+            width: 20px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        div,
+        span {
+            margin: 0 !important;
+            border: none !important;
+        }
+
+        .item-text {
+            font-size: 1em;
+            overflow: hidden;
+            color: #6c7293;
+            padding-left: 10px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        &:hover {
+            background-color: #f7f8fa;
+        }
+    }
+}

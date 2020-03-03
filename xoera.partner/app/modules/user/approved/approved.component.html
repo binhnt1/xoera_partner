@@ -1,0 +1,20 @@
+<div class="kt-login__signin" mvc-remove-wrapper>
+    <div class="kt-login__head">
+        <h3 class="kt-login__title">Account Awaiting Approval</h3>
+    </div>
+    <form class="kt-form">
+        <mvc-alert-component *ngIf="message" [text]="message" (closed)="closeMessage()"></mvc-alert-component>
+        <div class="form-group">
+            <editor style="width: 100%;" [object]="user" property="Account" [decorator]="{ label: '', editable: true, readonly: true }"></editor>
+        </div>
+        <div>
+            <p>Your account has not been approved</p>
+            <p>Please wait, while we review your account</p>
+        </div>
+        <div class="kt-login__actions">
+            <button id="kt_login_signin_submit" class="btn btn-primary btn-wide btn-font-lg" (click)="navigateSignIn()">
+                Back
+            </button>
+        </div>
+    </form>
+</div>

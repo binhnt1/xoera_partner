@@ -1,0 +1,80 @@
+<div *ngIf="decorator" class="dropdownWapper" mvc-remove-wrapper>
+    <div *ngIf="!decorator.label && !decorator.editable" class="form-view" [ngClass]="classAlign">
+        <span *ngIf="decorator.renderHtmlRaw" [innerHTML]="decorator.valueDisplay | sanitizeHtml"></span>
+        <span *ngIf="!decorator.renderHtmlRaw">{{ decorator.valueDisplay }}</span>
+    </div>
+    <div *ngIf="!decorator.label && decorator.editable" class="input-group" [ngClass]="classAlign">
+        <div class="input-group" [ngClass]="{'has-error': !decorator.valid}">
+            <div class="input-group-prepend" *ngIf="decorator.icon">
+                <span class="input-group-text">
+                    <i [ngClass]="decorator.icon"></i>
+                </span>
+            </div>
+            <dx-drop-down-box [(value)]="decorator.value" [valueExpr]="propertyKey" [deferRendering]="false" [displayExpr]="propertyDisplay" [placeholder]="decorator.placeholder" [showClearButton]="true" [dataSource]="items" [dropDownOptions]="decorator.dropDownOptions" [disabled]="decorator.readonly">
+                <div *dxTemplate="let data of 'content'">
+                    <dx-data-grid 
+                        [height]="470" 
+                        [dataSource]="items" 
+                        [showBorders]="true" 
+                        [showRowLines]="true" 
+                        [columnAutoWidth]="true" 
+                        [remoteOperations]="true" 
+                        [hoverStateEnabled]="true" 
+                        [columns]="propertyColumns" 
+                        [rowAlternationEnabled]="true"
+                        [filterRow]="{ visible: true }" 
+                        [selection]="{ mode: 'single' }" 
+                        [scrolling]="{ mode: 'standard' }" 
+                        (onRowClick)="rowSelected($event)" 
+                        [paging]="{ enabled: true, pageSize: 10 }">
+                        <dxo-header-filter [visible]="true"></dxo-header-filter>
+                        <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[8, 12, 20]"></dxo-pager>
+                    </dx-data-grid>
+                </div>
+            </dx-drop-down-box>
+            <span class="error" *ngIf="!decorator.valid">{{ decorator.message }}</span>
+        </div>
+    </div>
+    <div *ngIf="decorator.label && !decorator.editable" class="input-group">
+        <label class="col-form-label" [ngClass]="classLabel">{{ decorator.label }}</label>
+        <div class="col-form-label" [ngClass]="classInput">
+            <span *ngIf="decorator.renderHtmlRaw" [innerHTML]="decorator.valueDisplay | sanitizeHtml"></span>
+            <span *ngIf="!decorator.renderHtmlRaw">{{ decorator.valueDisplay }}</span>
+        </div>
+    </div>
+    <div *ngIf="decorator.label && decorator.editable" class="input-group">
+        <label class="col-form-label" [ngClass]="classLabel">{{ decorator.label }} <span class="star" *ngIf="decorator.required">*</span></label>
+        <div [ngClass]="classInput">
+            <div class="input-group" [ngClass]="{'has-error': !decorator.valid}">
+                <div class="input-group-prepend" *ngIf="decorator.icon">
+                    <span class="input-group-text">
+                        <i [ngClass]="decorator.icon"></i>
+                    </span>
+                </div>
+                <dx-drop-down-box [(value)]="decorator.value" [valueExpr]="propertyKey" [deferRendering]="false" [displayExpr]="propertyDisplay" [placeholder]="decorator.placeholder" [showClearButton]="true" [dataSource]="items" [dropDownOptions]="decorator.dropDownOptions" [disabled]="decorator.readonly">
+                    <div *dxTemplate="let data of 'content'">
+                        <dx-data-grid 
+                            [height]="470" 
+                            [dataSource]="items" 
+                            [showBorders]="true" 
+                            [showRowLines]="true" 
+                            [columnAutoWidth]="true" 
+                            [remoteOperations]="true" 
+                            [hoverStateEnabled]="true" 
+                            [columns]="propertyColumns" 
+                            [rowAlternationEnabled]="true"
+                            [filterRow]="{ visible: true }" 
+                            [selection]="{ mode: 'single' }" 
+                            [scrolling]="{ mode: 'standard' }" 
+                            (onRowClick)="rowSelected($event)" 
+                            [paging]="{ enabled: true, pageSize: 10 }">
+                            <dxo-header-filter [visible]="true"></dxo-header-filter>
+                            <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[8, 12, 20]"></dxo-pager>
+                        </dx-data-grid>
+                    </div>
+                </dx-drop-down-box>
+                <span class="error" *ngIf="!decorator.valid">{{ decorator.message }}</span>
+            </div>
+        </div>
+    </div>
+</div>

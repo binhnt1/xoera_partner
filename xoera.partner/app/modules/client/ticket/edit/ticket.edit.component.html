@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-sm-12" *ngIf="ticket">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        Submit a request
+                    </h3>
+                </div>
+            </div>
+            <form class="kt-form">
+                <div class="kt-portlet__body">
+                    <mvc-alert-component *ngIf="message" [text]="message" (closed)="closeMessage()"></mvc-alert-component>
+                    <div class="form-group">
+                        <editor style="width: 100%;" [object]="ticket" property="CategoryId"></editor>
+                    </div>
+                    <div class="form-group">
+                        <editor style="width: 100%;" [object]="ticket" property="Title"></editor>
+                    </div>
+                    <div class="form-group">
+                        <editor style="width: 100%;" [object]="ticket" property="Content"></editor>
+                    </div>
+                    <div class="form-group">
+                        <editor style="width: 100%;" [object]="ticket" property="Attachments"></editor>
+                    </div>
+                    <div class="form-group">
+                        <editor style="width: 100%;" [object]="ticket" property="Private"></editor>
+                    </div>
+                    <div class="form-group" *ngIf="admin">
+                        <editor style="width: 100%;" [object]="ticket" property="InternalNote"></editor>
+                    </div>
+                </div>
+                <div class="kt-form__actions" style="text-align: center;">
+                    <button type="submit" class="btn btn-primary" (click)="submitTicket()" [disabled]="processing" [ngClass]="{'kt-spinner kt-spinner--md kt-spinner--light':processing}">Submit</button>
+                    <button type="reset" class="btn btn-secondary" (click)="naviageToGridTicket()" style="margin-left: 10px;">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <mvc-loading-component [text]="loadingText" *ngIf="loading"></mvc-loading-component>
+</div>

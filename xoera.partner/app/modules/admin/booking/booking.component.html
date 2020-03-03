@@ -1,0 +1,22 @@
+<div class="row full-width">
+    <div class="col-sm-12">
+        <div class="kt-portlet kt-portlet--height-fluid">
+            <div class="kt-portlet__body">
+                <div class="kt-widget3">
+                    <div class="kt-widget3__item">
+                        <ul class="nav nav-tabs  nav-tabs-line nav-tabs-line-success" role="tablist">
+                            <li class="nav-item" *ngFor="let item of items; let i = index;" (click)="selectItem(item)">
+                                <a class="nav-link" [ngClass]="{'active':item.Key == selectedItem.Key}">{{ 'Booking ' + (i + 1) }}</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane" *ngFor="let item of items; let i = index;" [ngClass]="{'active':item.Key == selectedItem.Key}">
+                                <xoera-partner-booking-item [item]="item" (addItem)="addItem($event)"></xoera-partner-booking-item>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

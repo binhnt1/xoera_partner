@@ -1,0 +1,26 @@
+.pagination {
+
+    li,
+    a {
+        cursor: pointer;
+    }
+}
+
+/deep/ .page_info_wapper {
+    display: flex;
+    line-height: 33px;
+
+    .dropdownWapper {
+        display: flex;
+        justify-content: space-between;
+
+        .btn-group {
+            margin: 0 5px;
+
+            .btn {
+                padding-top: 7px;
+                padding-bottom: 6px;
+            }
+        }
+    }
+}

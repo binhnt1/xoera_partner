@@ -1,0 +1,15 @@
+<div *ngIf="decorator" [ngSwitch]="decorator.type" mvc-remove-wrapper>
+    <div *ngSwitchCase="DropDownType.List" [ngSwitch]="decorator.loadType">
+        <editor-dropdownbox-select #select *ngSwitchCase="DropdownLoadType.All" [decorator]="decorator" [property]="property" [(object)]="object" (valueChange)="valueChanged($event)"></editor-dropdownbox-select>
+    </div>
+    <div *ngSwitchCase="DropDownType.Dropdown" [ngSwitch]="decorator.loadType">
+        <editor-dropdownbox-dropdown #dropdown *ngSwitchCase="DropdownLoadType.All" [decorator]="decorator" [property]="property" [(object)]="object" (valueChange)="valueChanged($event)"></editor-dropdownbox-dropdown>
+        <editor-dropdownbox-dropdownajax #dropdownajax *ngSwitchCase="DropdownLoadType.Ajax" [decorator]="decorator" [property]="property" [(object)]="object" (valueChange)="valueChanged($event)"></editor-dropdownbox-dropdownajax>
+    </div>
+    <div *ngSwitchCase="DropDownType.DropdownGrid">
+        <editor-dropdownbox-dropdown-grid #dropdowngrid [decorator]="decorator" [property]="property" [(object)]="object" (valueChange)="valueChanged($event)"></editor-dropdownbox-dropdown-grid>
+    </div>
+    <div *ngSwitchCase="DropDownType.DropdownDevexpress">
+        <editor-dropdownbox-dropdown-devexpress #dropdowndevexpress [decorator]="decorator" [property]="property" [(object)]="object" (valueChange)="valueChanged($event)"></editor-dropdownbox-dropdown-devexpress>
+    </div>
+</div>

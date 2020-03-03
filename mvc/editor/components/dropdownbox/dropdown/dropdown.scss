@@ -1,0 +1,14 @@
+.form-control {
+    height: 100%;
+}
+
+/deep/ .dropdownWapper {
+    .input-group-text {
+        min-height: 37.88px;
+    }
+
+    .has-icon .btn {
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+    }
+}

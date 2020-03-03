@@ -1,0 +1,41 @@
+.modalWapper {
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    pointer-events: none;
+    transition: 0.3s all;
+    background-color: transparent;
+
+    &.show {
+        opacity: 1;
+        z-index: 9999;
+        pointer-events: all;
+        background-color: rgba($color: #000000, $alpha: 0.3);
+    }
+
+    .modal {
+        opacity: 0;
+        z-index: -1;
+        display: block;
+        pointer-events: none;
+
+        &.show {
+            opacity: 1;
+            z-index: 9999;
+            display: block;
+            pointer-events: all;
+        }
+
+        .modal-footer {
+            justify-content: center;
+
+            .btn {
+                min-width: 100px;
+            }
+        }
+    }
+}

@@ -1,0 +1,17 @@
+<div *ngIf="decorator" [ngSwitch]="decorator.type" mvc-remove-wrapper>
+    <editor-stringbox-text *ngSwitchCase="StringType.Cvc" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-stringbox-text>
+    <editor-stringbox-text *ngSwitchCase="StringType.Card" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-stringbox-text>
+    <editor-stringbox-text *ngSwitchCase="StringType.Text" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-stringbox-text>
+    <editor-stringbox-text *ngSwitchCase="StringType.Code" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-stringbox-text>
+    <editor-stringbox-text *ngSwitchCase="StringType.Link" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-stringbox-text>
+    <editor-stringbox-text *ngSwitchCase="StringType.Phone" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-stringbox-text>
+    <editor-stringbox-text *ngSwitchCase="StringType.Email" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-stringbox-text>
+    <editor-stringbox-text *ngSwitchCase="StringType.Account" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-stringbox-text>
+    <editor-stringbox-text *ngSwitchCase="StringType.Password" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-stringbox-text>
+    <div *ngSwitchCase="StringType.AutoGenerate">
+        <editor-stringbox-text *ngIf="decorator.max < 100" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-stringbox-text>
+        <editor-stringbox-multitext *ngIf="decorator.max >= 100" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-stringbox-multitext>
+    </div>
+    <editor-stringbox-multitext *ngSwitchCase="StringType.MultiText" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-stringbox-multitext>
+    <editor-stringbox-multitext *ngSwitchCase="StringType.MultiHtml" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-stringbox-multitext>
+</div>

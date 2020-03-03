@@ -1,0 +1,37 @@
+<div class="kt-portlet__head" mvc-remove-wrapper>
+    <div class="kt-portlet__head-label">
+        <div class="btn-group" *ngIf="actions && actions.length > 0">
+            <span *ngFor="let item of actions">
+                <button *ngIf="!item.confirm" [ngClass]="item.className" (click)="item.click()"> {{ item.name }}
+                    <i [ngClass]="item.icon"></i>
+                </button>
+                <button *ngIf="item.confirm" class="confirmation" [ngClass]="item.className" [attr.data-toggle]="confirmation" [attr.data-btn-ok-label]="item.confirm.buttons[0].name" [attr.data-btn-ok-class]="item.confirm.buttons[0].className" [attr.data-btn-ok-icon-content]="item.confirm.buttons[0].icon" [attr.data-btn-cancel-label]="item.confirm.buttons[1].name" [attr.data-btn-cancel-class]="item.confirm.buttons[1].className" [attr.data-btn-cancel-icon-content]="item.confirm.buttons[1].icon" [attr.data-title]="item.confirm.title" [attr.data-content]="item.confirm.content">
+                    {{ item.name }} <i [ngClass]="item.icon"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+    <div class="kt-portlet__head-toolbar">
+            <div *ngIf="tools && tools.length > 0" class="dropdown dropdown-inline pull-right">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default btn-icon-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <i class="fa fa-share"></i> Tools
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <ul class="kt-nav">
+                                <li *ngFor="let item of tools" class="kt-nav__item" [ngClass]="{'divider': item.divider}">
+                                    <a *ngIf="!item.divider && !item.confirm" class="kt-nav__link" (click)="item.click()">
+                                        <i class="kt-nav__link-icon" [ngClass]="item.icon"></i>&nbsp;
+                                        <span class="kt-nav__link-text">{{ item.name }}</span>
+                                    </a>
+                                    <a *ngIf="!item.divider && item.confirm" class="kt-nav__link tool-confirmation" [ngClass]="item.className" [attr.data-toggle]="confirmation" [attr.data-btn-ok-label]="item.confirm.buttons[0].name" [attr.data-btn-ok-class]="item.confirm.buttons[0].className" [attr.data-btn-ok-icon-content]="item.confirm.buttons[0].icon" [attr.data-btn-cancel-label]="item.confirm.buttons[1].name" [attr.data-btn-cancel-class]="item.confirm.buttons[1].className" [attr.data-btn-cancel-icon-content]="item.confirm.buttons[1].icon" [attr.data-title]="item.confirm.title" [attr.data-content]="item.confirm.content">
+                                        <i class="kt-nav__link-icon" [ngClass]="item.icon"></i>&nbsp;
+                                        <span class="kt-nav__link-text">{{ item.name }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+    </div>
+</div>

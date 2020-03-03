@@ -1,0 +1,23 @@
+<div *ngIf="decorator" class="dropdownWapper" mvc-remove-wrapper>
+    <div *ngIf="!decorator.label" class="form-view" [ngClass]="classAlign">
+        <span *ngIf="decorator.renderHtmlRaw" [innerHTML]="decorator.valueDisplay | sanitizeHtml"></span>
+        <span *ngIf="!decorator.renderHtmlRaw">{{ decorator.valueDisplay }}</span>
+    </div>
+    <div *ngIf="decorator.label" class="input-group">
+        <label class="col-form-label" [ngClass]="classLabel">{{ decorator.label }}</label>
+        <div [ngClass]="classInput">
+            <div *ngIf="!decorator.editable">
+                <span *ngIf="decorator.renderHtmlRaw" [innerHTML]="decorator.valueDisplay | sanitizeHtml"></span>
+                <span *ngIf="!decorator.renderHtmlRaw">{{ decorator.valueDisplay }}</span>
+            </div>
+            <div *ngIf="decorator.editable">
+                <select *ngIf="!decorator.multiple" [id]="decorator.id" class="form-control" [attr.data-live-search]="decorator.allowSearch" [attr.data-size]="8" [disabled]="decorator.readonly">
+                    <option *ngFor="let item of items" [value]="item.key" [selected]="item.key == decorator.value" [attr.data-content]="item.value">{{item.value}}</option>
+                </select>
+                <select *ngIf="decorator.multiple" [id]="decorator.id" multiple class="form-control" [attr.data-live-search]="decorator.allowSearch" [attr.data-size]="8" [disabled]="decorator.readonly">
+                    <option *ngFor="let item of items" [value]="item.key" [selected]="item.key == decorator.value" [attr.data-content]="item.value">{{item.value}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

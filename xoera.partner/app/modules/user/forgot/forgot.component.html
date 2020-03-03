@@ -1,0 +1,22 @@
+<div class="kt-login__forgot" mvc-remove-wrapper>
+    <div class="kt-login__head">
+        <h3 class="kt-login__title">Forgotten Password ?</h3>
+        <div class="kt-login__desc">Enter your email to reset your password:</div>
+    </div>
+    <form class="kt-form">
+        <mvc-alert-component *ngIf="message" [text]="message" (closed)="closeMessage()"></mvc-alert-component>
+        <div class="form-group">
+            <editor style="width: 100%;" [object]="user" property="Email" [decorator]="{ label: '', editable: true }"></editor>
+        </div>
+        <div class="row kt-login__extra">
+            <div class="col">
+                <button class="btn btn-default btn-wide btn-font-lg" (click)="navigateSignIn()">Back</button>
+            </div>
+            <div class="col kt-align-right">
+                <button class="btn btn-primary btn-wide btn-font-lg" (click)="submit()" [disabled]="processing" [ngClass]="{'kt-spinner kt-spinner--md kt-spinner--light':processing}">
+                    Request
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

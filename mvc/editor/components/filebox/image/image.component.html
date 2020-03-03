@@ -1,0 +1,70 @@
+<div *ngIf="decorator" class="imageWapper" mvc-remove-wrapper>
+    <div *ngIf="!decorator.label && !decorator.editable" class="form-view" [ngClass]="classAlign">
+        <div class="image-container" *ngIf="files && files.length > 0">
+            <div class="image-inner">
+                <img *ngIf="decorator.store != StoreFileType.Database" [src]="files[0].Path || files[0].Data" />
+                <img *ngIf="decorator.store == StoreFileType.Database" [src]="files[0].Data | sanitizeUrl" />
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!decorator.label && decorator.editable" class="input-group" [ngClass]="classAlign">
+        <div class="input-group" [ngClass]="{'has-error': !decorator.valid}">
+            <div class="image-container" [ngClass]="{'fullwidth':!decorator.multiple}" *ngIf="files && files.length > 0">
+                <div class="image-inner" *ngFor="let item of files">
+                    <img *ngIf="decorator.store != StoreFileType.Database" [src]="item.Path || item.Data" />
+                    <img *ngIf="decorator.store == StoreFileType.Database" [src]="item.Data | sanitizeUrl" />
+                    <div class="overlay" *ngIf="item.Name">
+                        <p class="name">{{item.Name}}</p>
+                        <p class="size" *ngIf="item.Size">
+                            {{item.Size > 0 ? item.Size.toFixed(2) + 'MB' : (item.Size * 1024).toFixed(2) + 'KB'}}
+                        </p>
+                    </div>
+                    <div class="close" (click)="removeFile(item)" *ngIf="!decorator.readonly"><i class="la la-close"></i></div>
+                </div>
+            </div>
+            <div class="image-container" [ngClass]="{'fullwidth':!decorator.multiple}" (click)="selectFileToUpload()" *ngIf="!decorator.readonly && (!files|| files.length == 0 || decorator.multiple)">
+                <div class="image-inner">
+                    <i class="la la-plus-circle"></i>
+                </div>
+            </div>
+            <span class="error" *ngIf="!decorator.valid">{{ decorator.message }}</span>
+        </div>
+        <input #fileInput type="file" [id]="decorator.id" [multiple]="decorator.multiple" (change)="uploadFile($event)" style="width: 100%; height: 100%; display: none;" accept="image/jpg,image/jpeg,image/png,image/gif,image/svg+xml">
+    </div>
+    <div *ngIf="decorator.label && !decorator.editable" class="input-group">
+        <label class="col-form-label" [ngClass]="classLabel">{{ decorator.label }}</label>
+        <div [ngClass]="classInput" *ngIf="files && files.length > 0">
+            <div class="image-container" *ngFor="let item of files">
+                <img *ngIf="decorator.store != StoreFileType.Database" [src]="item.Path || item.Data" />
+                <img *ngIf="decorator.store == StoreFileType.Database" [src]="item.Data | sanitizeUrl" />
+            </div>
+        </div>
+    </div>
+    <div *ngIf="decorator.label && decorator.editable" class="input-group">
+        <label class="col-form-label" [ngClass]="classLabel">{{ decorator.label }} <span class="star" *ngIf="decorator.required">*</span></label>
+        <div [ngClass]="classInput">
+            <div class="input-group" [ngClass]="{'has-error': !decorator.valid}">
+                <div class="image-container" [ngClass]="{'fullwidth':!decorator.multiple}" *ngIf="files && files.length > 0">
+                    <div class="image-inner" *ngFor="let item of files">
+                        <img *ngIf="decorator.store != StoreFileType.Database" [src]="item.Path || item.Data" />
+                        <img *ngIf="decorator.store == StoreFileType.Database" [src]="item.Data | sanitizeUrl" />
+                        <div class="overlay" *ngIf="item.Name">
+                            <p class="name">{{item.Name}}</p>
+                            <p class="size" *ngIf="item.Size">
+                                {{item.Size > 0 ? item.Size.toFixed(2) + 'MB' : (item.Size * 1024).toFixed(2) + 'KB'}}
+                            </p>
+                        </div>
+                        <div class="close" (click)="removeFile(item)" *ngIf="!decorator.readonly"><i class="la la-close"></i></div>
+                    </div>
+                </div>
+                <div class="image-container" [ngClass]="{'fullwidth':!decorator.multiple}" (click)="selectFileToUpload()" *ngIf="!decorator.readonly && (!files|| files.length == 0 || decorator.multiple)">
+                    <div class="image-inner">
+                        <i class="la la-plus-circle"></i>
+                    </div>
+                </div>
+                <span class="error" *ngIf="!decorator.valid">{{ decorator.message }}</span>
+            </div>
+            <input #fileInput type="file" [id]="decorator.id" [multiple]="decorator.multiple" (change)="uploadFile($event)" style="width: 100%; height: 100%; display: none;" accept="image/jpg,image/jpeg,image/png,image/gif,image/svg+xml">
+        </div>
+    </div>
+</div>

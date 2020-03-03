@@ -1,0 +1,50 @@
+$star-on-color: #F9DF4A;
+$star-off-color: #CCCCCC;
+
+.modalWapper {
+    .btn {
+        margin-right: 10px;
+    }
+
+    .rating {
+        float: left;
+        height: 25px;
+        margin-bottom: 10px;
+
+        label {
+            width: 25px;
+            float: right;
+            position: relative;
+
+            &:not(:first-of-type) {
+                padding-right: 4px;
+            }
+
+            &:before {
+                line-height: 1;
+                font-size: 25px;
+                content: "\2605";
+                color: $star-off-color;
+            }
+        }
+
+        input {
+            display: none;
+        }
+
+        input:checked~label:before {
+            color: $star-on-color;
+        }
+
+    }
+}
+
+.tableWapper {
+    tbody {
+        tr {
+            &:hover {
+                background-color: #ffe;
+            }
+        }
+    }
+}

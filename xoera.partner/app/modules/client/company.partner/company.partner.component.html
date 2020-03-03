@@ -1,0 +1,119 @@
+<div class="row">
+    <div class="col-sm-12">
+        <div class="kt-portlet kt-portlet--height-fluid">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        Partner
+                    </h3>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <div class="kt-widget3">
+                    <div class="kt-widget3__item">
+                        <mvc-alert-component *ngIf="message" [text]="message" (closed)="closeMessage()"></mvc-alert-component>
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="form-group" *ngIf="admin">
+                                    <editor [object]="item" property="CompanyId" (objectChange)="companyChanged()" [decorator]="{classInput: 'col-sm-9'}"></editor>
+                                </div>
+                                <div class="form-group partner-body" style="display: flex;">
+                                    <div class="col-sm-5">
+                                        <select class="form-control" name="options" multiple size="15" *ngIf="companyAvaiables" [(ngModel)]="companyAvaiableChoices" (ngModelChange)="changeCompanyAvaiableChoices()">
+                                            <option *ngFor="let company of companyAvaiables" [value]="company.Id">{{company.Name}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-2 partner-buttons">
+                                        <div>
+                                            <button type="button" class="btn btn-primary btn-icon" (click)="addPartner()" [disabled]="disableAddPartner"><i class="flaticon2-arrow"></i></button>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn btn-primary btn-icon" (click)="removePartner()" [disabled]="disableRemovePartner"><i class="flaticon2-back-1"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <select class="form-control" name="options" multiple size="15" *ngIf="companyPartners" [(ngModel)]="companyPartnerChoices" (ngModelChange)="changeCompanyPartnerChoices()">
+                                            <option *ngFor="let company of companyPartners" [value]="company.Id">{{company.Name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="kt-portlet kt-portlet--height-fluid" *ngIf="item && item.Company">
+                                    <div class="kt-portlet__head" style="min-height: unset; padding-bottom: 15px;">
+                                        <div class="kt-portlet__head-label">
+                                            <h3 class="kt-portlet__head-title">
+                                                Company Summary
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="kt-portlet__body">
+                                        <div class="kt-widget13">
+                                            <div class="kt-widget13__item">
+                                                <span class="kt-widget13__desc">
+                                                    Company Name:
+                                                </span>
+                                                <span class="kt-widget13__text kt-widget13__text--bold">
+                                                    {{ item.Company.Name }}
+                                                </span>
+                                            </div>
+                                            <div class="kt-widget13__item" *ngIf="item.Company.ContactName">
+                                                <span class="kt-widget13__desc kt-align-right">
+                                                    Contact Name:
+                                                </span>
+                                                <span class="kt-widget13__text">
+                                                    {{ item.Company.ContactName }}
+                                                </span>
+                                            </div>
+                                            <div class="kt-widget13__item" *ngIf="item.Company.ContactEmail">
+                                                <span class="kt-widget13__desc">
+                                                    Contact Email:
+                                                </span>
+                                                <span class="kt-widget13__text">
+                                                    {{ item.Company.ContactEmail }}
+                                                </span>
+                                            </div>
+                                            <div class="kt-widget13__item" *ngIf="item.Company.ContactPhone">
+                                                <span class="kt-widget13__desc">
+                                                    Contact Phone:
+                                                </span>
+                                                <span class="kt-widget13__text ">
+                                                    {{ item.Company.ContactPhone }}
+                                                </span>
+                                            </div>
+                                            <div class="kt-widget13__item" *ngIf="item.Company.Address">
+                                                <span class="kt-widget13__desc">
+                                                    Address:
+                                                </span>
+                                                <span class="kt-widget13__text">
+                                                    {{ item.Company.Address }}
+                                                </span>
+                                            </div>
+                                            <div class="kt-widget13__item" *ngIf="item.Company.Lat">
+                                                <span class="kt-widget13__desc">
+                                                    Lat:
+                                                </span>
+                                                <span class="kt-widget13__text  kt-font-brand ">
+                                                    {{ item.Company.Lat }}
+                                                </span>
+                                            </div>
+                                            <div class="kt-widget13__item" *ngIf="item.Company.Lng">
+                                                <span class="kt-widget13__desc">
+                                                    Lng:
+                                                </span>
+                                                <span class="kt-widget13__text  kt-font-brand ">
+                                                    {{ item.Company.Lng }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <mvc-loading-component [text]="loadingText" *ngIf="loading"></mvc-loading-component>
+</div>

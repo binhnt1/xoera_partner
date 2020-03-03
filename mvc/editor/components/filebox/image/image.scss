@@ -1,0 +1,104 @@
+.image-container {
+    height: 120px;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+
+    &.fullwidth {
+        width: 100%;
+        height: unset;
+
+        .image-inner {
+            margin: 0;
+            width: 100%;
+
+            img {
+                height: auto;
+                max-width: 100%;
+            }
+        }
+    }
+
+    .image-inner {
+        width: 120px;
+        height: 100%;
+        display: flex;
+        cursor: pointer;
+        position: relative;
+        margin: 0 10px 0 0;
+        border-radius: 5px;
+        transition: all 0.5s;
+        align-content: center;
+        justify-content: center;
+        border: 1px solid #ebedf2;
+
+        img {
+            height: 100%;
+            max-width: 100%;
+        }
+
+        .close {
+            top: 0;
+            right: 0px;
+            padding: 3px;
+            color: #fff;
+            overflow: hidden;
+            position: absolute;
+            border-radius: 0 5px;
+            transition: all 0.5s;
+            background-color: rgba($color: #232323, $alpha: 1);
+
+            .la {
+                color: #eee;
+                font-size: 1.2rem;
+                font-weight: bold;
+            }
+
+            &:hover {
+                .la {
+                    color: #fff;
+                }
+            }
+        }
+
+        .overlay {
+            opacity: 0;
+            width: 100%;
+            color: #fff;
+            bottom: -50px;
+            overflow: hidden;
+            position: absolute;
+            transition: all 0.5s;
+            padding: 5px 10px 0 10px;
+            border-radius: 0 0 5px 5px;
+            background-color: rgba($color: #232323, $alpha: 0.5);
+
+            p {
+                margin: 0;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+        }
+
+        .la-plus-circle {
+            color: #ebedf2;
+            line-height: 118px;
+            transition: all 0.5s;
+            font-size: 3.6rem !important;
+        }
+
+        &:hover {
+            border-color: #7096f6;
+
+            .overlay {
+                bottom: 0;
+                opacity: 1;
+            }
+
+            .la-plus-circle {
+                color: #7096f6;
+            }
+        }
+    }
+}

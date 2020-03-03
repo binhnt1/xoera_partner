@@ -1,0 +1,64 @@
+<div *ngIf="decorator" class="selectWapper" mvc-remove-wrapper>
+    <div *ngIf="!decorator.label && !decorator.editable" class="form-view" [ngClass]="classAlign">
+        <span *ngIf="decorator.renderHtmlRaw" [innerHTML]="decorator.valueDisplay | sanitizeHtml"></span>
+        <span *ngIf="!decorator.renderHtmlRaw">{{ decorator.valueDisplay }}</span>
+    </div>
+    <div *ngIf="!decorator.label && decorator.editable" class="input-group" [ngClass]="classAlign">
+        <div class="input-group" [ngClass]="{'has-error': !decorator.valid}">
+            <div class="input-group-prepend" *ngIf="decorator.icon">
+                <span class="input-group-text">
+                    <i [ngClass]="decorator.icon"></i>
+                </span>
+            </div>
+            <div *ngIf="decorator.multiple" class="mt-checkbox-list" [ngClass]="'layout_' + decorator.layoutType">
+                <label class="kt-checkbox" *ngFor="let item of items; let i = index">
+                    <input type="checkbox" [id]="decorator.id + '_' + i" [attr.name]="decorator.id" [(ngModel)]="item.selected" (change)="valueChanged(item)">
+                    <label style="padding-left: 12px;">{{ item.value }}</label>
+                    <span></span>
+                </label>
+            </div>
+            <div *ngIf="!decorator.multiple" class="mt-radio-list" [ngClass]="'layout_' + decorator.layoutType">
+                <label class="kt-radio" *ngFor="let item of items; let i = index">
+                    <input type="radio" [id]="decorator.id + '_' + i" [attr.name]="decorator.id" [checked]="item.selected" value="{{item.key}}" (change)="valueChanged(item)">
+                    <label style="padding-left: 25px;">{{ item.value }}</label>
+                    <span></span>
+                </label>
+            </div>
+            <span class="error" *ngIf="!decorator.valid">{{ decorator.message }}</span>
+        </div>
+    </div>
+    <div *ngIf="decorator.label && !decorator.editable" class="input-group">
+        <label class="col-form-label" [ngClass]="classLabel">{{ decorator.label }}</label>
+        <div [ngClass]="classInput">
+            <span *ngIf="decorator.renderHtmlRaw" [innerHTML]="decorator.valueDisplay | sanitizeHtml"></span>
+            <span *ngIf="!decorator.renderHtmlRaw">{{ decorator.valueDisplay }}</span>
+        </div>
+    </div>
+    <div *ngIf="decorator.label && decorator.editable" class="input-group">
+        <label class="col-form-label" [ngClass]="classLabel">{{ decorator.label }} <span class="star" *ngIf="decorator.required">*</span></label>
+        <div [ngClass]="classInput">
+            <div class="input-group" [ngClass]="{'has-error': !decorator.valid}">
+                <div class="input-group-prepend" *ngIf="decorator.icon">
+                    <span class="input-group-text">
+                        <i [ngClass]="decorator.icon"></i>
+                    </span>
+                </div>
+                <div *ngIf="decorator.multiple" class="mt-checkbox-list" [ngClass]="'layout_' + decorator.layoutType">
+                    <label class="kt-checkbox" *ngFor="let item of items; let i = index">
+                        <input type="checkbox" [id]="decorator.id + '_' + i" [attr.name]="decorator.id" [(ngModel)]="item.selected" (change)="valueChanged(item)">
+                        <label style="padding-left: 12px;">{{ item.value }}</label>
+                        <span></span>
+                    </label>
+                </div>
+                <div *ngIf="!decorator.multiple" class="mt-radio-list" [ngClass]="'layout_' + decorator.layoutType">
+                    <label class="kt-radio" *ngFor="let item of items; let i = index">
+                        <input type="radio" [id]="decorator.id + '_' + i" [attr.name]="decorator.id" [checked]="item.selected" value="{{item.key}}" (change)="valueChanged()">
+                        <label style="padding-left: 25px;">{{ item.value }}</label>
+                        <span></span>
+                    </label>
+                </div>
+                <span class="error" *ngIf="!decorator.valid">{{ decorator.message }}</span>
+            </div>
+        </div>
+    </div>
+</div>

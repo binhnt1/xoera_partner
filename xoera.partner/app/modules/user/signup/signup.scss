@@ -1,0 +1,179 @@
+.kt-form {
+    padding: 40px 20px;
+}
+
+/deep/ .wizard {
+    width: 100%;
+    position: relative;
+    justify-content: space-between;
+    background: rgba($color: #fff, $alpha: 1);
+
+    .kt-login__head {
+        margin-bottom: 1rem !important;
+
+        .kt-login__title {
+            margin: 0;
+        }
+    }
+
+    .inner {
+        display: flex;
+    }
+
+    .section {
+        width: 1170px;
+        display: flex;
+        overflow: hidden;
+        transition: all 0.5s;
+        justify-content: space-between;
+
+        section {
+            width: 33.33%;
+        }
+    }
+
+    .actions {
+        display: none;
+    }
+
+    .content {
+        margin: 0 !important;
+
+        h2 {
+            display: none;
+        }
+
+        .form-header {
+            margin: 30px 0;
+
+            h3 {
+                margin: 0 !important;
+            }
+        }
+    }
+
+    .form-header {
+        text-align: center;
+    }
+
+    .form-content {
+        width: 100%;
+    }
+}
+
+/deep/ .wizard> {
+    .steps {
+
+        .current-info,
+        .number {
+            display: none;
+        }
+
+        ul {
+            display: flex;
+            justify-content: center;
+        }
+
+        li {
+            a {
+                display: inline-block;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background: #e9e0cf;
+                margin-right: 78px;
+                position: relative;
+
+                &:before {
+                    content: "";
+                    width: 58px;
+                    height: 2px;
+                    background: #e9e0cf;
+                    position: absolute;
+                    right: 22px;
+                    top: 5px;
+                }
+
+                &:after {
+                    content: "";
+                    width: 0;
+                    height: 2px;
+                    background: #6d7f52;
+                    position: absolute;
+                    left: -68px;
+                    top: 5px;
+                    transition: all 0.6s ease;
+                }
+            }
+
+            &.first a {
+                background: #6d7f52;
+            }
+
+            &.checked a {
+                background: #6d7f52;
+
+                &:after {
+                    width: 58px;
+                }
+            }
+
+            &:last-child a {
+                margin-right: 0;
+            }
+
+            &:first-child a {
+
+                &:before,
+                &:after {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .content {
+        position: relative;
+        height: 100%;
+    }
+}
+
+.register-form {
+    opacity: 0;
+    transition: all 0.5s;
+
+    &.active {
+        opacity: 1;
+        overflow: hidden;
+    }
+}
+
+.kt-vertify__account-link {
+    display: flex !important;
+    cursor: default !important;
+    justify-content: space-between;
+
+    span {
+        opacity: 0.5;
+        cursor: default;
+        line-height: 50px;
+
+        &.timer {
+            opacity: 1;
+            width: 50px;
+            height: 50px;
+            color: #fff;
+            font-size: 18px;
+            line-height: 50px;
+            border-radius: 50%;
+            text-align: center;
+            display: inline-block;
+            background-color: rgba($color: #6c7293, $alpha: 0.4);
+        }
+
+        &.active {
+            opacity: 1;
+            cursor: pointer;
+        }
+    }
+}

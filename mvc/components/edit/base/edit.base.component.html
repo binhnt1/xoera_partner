@@ -1,0 +1,11 @@
+<edit-heading [tools]="tools" [actions]="actions"></edit-heading>
+<div class="kt-portlet__body">
+    <form class="kt-form kt-form--label-right" style="min-height: 50vh;">
+        <div class="kt-portlet__body" *ngIf="item">
+            <div class="form-group row" *ngFor="let decorator of decorators">
+                <editor style="width: 100%;" [(object)]="item" [decorator]="decorator"></editor>
+            </div>
+        </div>
+        <mvc-loading-component [text]="Loading" *ngIf="loading"></mvc-loading-component>
+    </form>
+</div>

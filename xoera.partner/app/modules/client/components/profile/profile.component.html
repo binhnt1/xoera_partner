@@ -1,0 +1,45 @@
+<div class="kt-portlet kt-portlet--height-fluid" *ngIf="item">
+        <div class="kt-portlet__head">
+            <div class="kt-portlet__head-label">
+                <h3 class="kt-portlet__head-title">
+                    Profile
+                </h3>
+            </div>
+        </div>
+        <div class="kt-portlet__body">
+            <div class="kt-widget13">
+                <div class="kt-widget13__item">
+                    <span class="kt-widget13__desc">
+                        UserName
+                    </span>
+                    <span class="kt-widget13__text kt-widget13__text--bold">
+                        {{ item.UserName }}
+                    </span>
+                </div>
+                <div class="kt-widget13__item">
+                    <span class="kt-widget13__desc kt-align-right">
+                        Name:
+                    </span>
+                    <span class="kt-widget13__text">
+                        {{ item.FirstName + ', ' + item.SurName }}
+                    </span>
+                </div>
+                <div class="kt-widget13__item" *ngIf="item.Email">
+                    <span class="kt-widget13__desc">
+                        Email:
+                    </span>
+                    <span class="kt-widget13__text">
+                        {{ item.Email }}
+                    </span>
+                </div>
+                <div class="kt-widget13__item" *ngIf="item.Phone">
+                    <span class="kt-widget13__desc">
+                        Phone:
+                    </span>
+                    <span class="kt-widget13__text ">
+                        {{ item.Phone }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>

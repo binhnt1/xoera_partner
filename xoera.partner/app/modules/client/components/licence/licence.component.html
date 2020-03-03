@@ -1,0 +1,37 @@
+<div class="kt-portlet kt-portlet--skin-solid kt-portlet--solid-warning kt-portlet--head-lg kt-portlet--head-overlay kt-portlet--height-fluid">
+    <div class="kt-portlet__head kt-portlet__head--noborder">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title kt-font-light">
+                Licences
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body kt-margin-t-0 kt-padding-t-0">
+
+        <!--begin::Widget 29-->
+        <div class="kt-widget29">
+            <div class="kt-widget29__content" *ngFor="let item of items" (click)="navigate(item)">
+                <h3 class="kt-widget29__title">{{ item.Key }}</h3>
+                <div class="kt-widget29__item">
+                    <div class="kt-widget29__info">
+                        <span class="kt-widget29__subtitle">Description</span>
+                        <span class="kt-widget29__stats kt-font-success">{{ item.Description }}</span>
+                    </div>
+                    <div class="kt-widget29__info">
+                        <span class="kt-widget29__subtitle">Expiry Date</span>
+                        <span class="kt-widget29__stats kt-font-brand">{{ item.ExpiryDate | date:'dd/MM/yyyy HH:mm' }}</span>
+                    </div>
+                    <div class="kt-widget29__info">
+                        <span class="kt-widget29__subtitle">DeviceId</span>
+                        <span class="kt-widget29__stats kt-font-danger">{{ item.DeviceId }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-widget29__actions kt-align-right">
+                <a href="#" class="btn btn-brand">View all licences</a>
+            </div>
+        </div>
+
+        <!--end::Widget 29-->
+    </div>
+</div>

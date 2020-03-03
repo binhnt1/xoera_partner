@@ -1,0 +1,45 @@
+<div class="kt-portlet kt-portlet--fit kt-portlet--head-lg kt-portlet--head-overlay kt-portlet--skin-solid kt-portlet--height-fluid">
+    <div class="kt-portlet__head kt-portlet__head--noborder kt-portlet__space-x">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                Activity
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body kt-portlet__body--fit">
+        <div class="kt-widget17">
+            <div class="kt-widget17__visual kt-widget17__visual--chart kt-portlet-fit--top kt-portlet-fit--sides" style="background-color: #fd397a">
+                <div class="kt-widget17__chart" style="height:320px;">
+                    <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                        <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                            <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                        </div>
+                        <div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                            <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                        </div>
+                    </div>
+                    <canvas id="kt_chart_activities" width="733" height="216" class="chartjs-render-monitor" style="display: block; width: 733px; height: 216px;"></canvas>
+                </div>
+            </div>
+            <div class="kt-widget17__stats" *ngIf="items">
+                <div class="kt-widget17__items">
+                    <div class="kt-widget17__item" *ngFor="let item of items">
+                        <a (click)="navigate(item)">
+                            <span class="kt-widget17__icon">
+                                <i [ngClass]="item.Icon" [style.color]="item.IconColor"></i>
+                            </span>
+                            <span class="kt-widget17__subtitle">
+                                {{item.Name}}
+                            </span>
+                            <span class="kt-widget17__desc">
+                                {{item.Count}} Records
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<mvc-loading-component [text]="Loading" *ngIf="loading"></mvc-loading-component>

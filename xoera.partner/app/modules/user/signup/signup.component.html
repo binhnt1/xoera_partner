@@ -1,0 +1,113 @@
+<div class="kt-login__signin" mvc-remove-wrapper>
+    <div class="kt-form content" mvc-remove-wrapper>
+        <mvc-alert-component *ngIf="message" [text]="message" (closed)="closeMessage()"></mvc-alert-component>
+        <form class="register-form active">
+            <div class="wizard">
+                <div class="steps clearfix">
+                    <ul role="tablist">
+                        <li class="first" [ngClass]="{'checked current': translateIndex == 0}"><a></a></li>
+                        <li class="done" [ngClass]="{'checked current': translateIndex >= 1}"><a></a></li>
+                        <li class="last done" [ngClass]="{'checked current': translateIndex >= 2}"><a></a></li>
+                    </ul>
+                </div>
+
+                <div id="sectionContent" class="section">
+                    <!-- SECTION 1 -->
+                    <section>
+                        <div class="inner">
+                            <div class="form-content">
+                                <div class="kt-login__head">
+                                    <h3 class="kt-login__title">Personal</h3>
+                                </div>
+                                <div class="form-group">
+                                    <editor style="width: 100%;" [object]="user" property="UserName" [decorator]="{ label: '', editable: true }"></editor>
+                                </div>
+                                <div class="form-group">
+                                    <editor style="width: 100%;" [object]="user" property="FirstName" [decorator]="{ label: '', editable: true }"></editor>
+                                </div>
+                                <div class="form-group">
+                                    <editor style="width: 100%;" [object]="user" property="SurName" [decorator]="{ label: '', editable: true }"></editor>
+                                </div>
+                                <div class="form-group">
+                                    <editor style="width: 100%;" [object]="user" property="Phone" [decorator]="{ label: '', editable: true }"></editor>
+                                </div>
+                                <div class="form-group">
+                                    <editor style="width: 100%;" [object]="user" property="Email" [decorator]="{ label: '', editable: true }"></editor>
+                                </div>
+                                <div class="form-group">
+                                    <editor style="width: 100%;" [object]="user" property="Password" [decorator]="{ label: '', editable: true }"></editor>
+                                </div>
+                                <div class="form-group">
+                                    <editor style="width: 100%;" [object]="user" property="ConfirmPassword" [decorator]="{ label: '', editable: true }"></editor>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 2 -->
+                    <section>
+                        <div class="inner">
+                            <div class="form-content">
+                                <div class="kt-login__head">
+                                    <h3 class="kt-login__title">Company</h3>
+                                </div>
+                                <div class="form-group">
+                                    <editor style="width: 100%;" [object]="user" property="CompanyName" [decorator]="{ label: '', editable: true }"></editor>
+                                </div>
+                                <div class="form-group">
+                                    <editor style="width: 100%;" [object]="user" property="ContactPerson" [decorator]="{ label: '', editable: true }"></editor>
+                                </div>
+                                <div class="form-group">
+                                    <editor style="width: 100%;" [object]="user" property="ContactPhone" [decorator]="{ label: '', editable: true }"></editor>
+                                </div>
+                                <div class="form-group">
+                                    <editor style="width: 100%;" [object]="user" property="ContactEmail" [decorator]="{ label: '', editable: true }"></editor>
+                                </div>
+                                <div class="form-group">
+                                    <editor style="width: 100%;" [object]="user" property="CompanyAddress" [decorator]="{ label: '', editable: true }"></editor>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 3 -->
+                    <section>
+                        <div class="inner">
+                            <div class="form-content">
+                                <div class="kt-login__head">
+                                    <h3 class="kt-login__title">Vertify</h3>
+                                </div>
+                                <div class="form-group">
+                                    <editor style="width: 100%;" [object]="user" property="VertifyCode" [decorator]="{ label: '', editable: true }"></editor>
+                                </div>
+                                <a class="kt-vertify__account-link" style="margin-top: 5px; display: block;">
+                                    <span (click)="sendVertifyCode()" [ngClass]="{'active':timeCountDown <= 0}">Re-send vertify code</span>
+                                    <span class="timer" *ngIf="timeCountDown">{{ timeCountDown | number:'2.0-0' }}</span>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="kt-login__extra">
+                <div class="form-group" style="position: relative;">
+                    <editor [object]="user" property="AgreeTerms" [decorator]="{ label: '', editable: true }"></editor>
+                    <label style="position: absolute; left: 25px; top: 0;">I agree to the <a>Terms of Service </a> & <a>Privacy Policy </a></label>
+                </div>
+            </div>
+            <div class="row kt-login__extra" style="display: flex;">
+                <div class="col">
+                    <button class="btn btn-default btn-wide btn-font-lg" (click)="navigateSignIn()">Back</button>
+                </div>
+                <div class="col kt-align-right" style="display: flex; justify-content: flex-end;">
+                    <button class="btn btn-success btn-wide btn-font-lg" *ngIf="translateIndex == 1" (click)="processPrev()" [disabled]="processing">
+                        Previous
+                    </button>
+                    <button class="btn btn-primary btn-wide btn-font-lg" (click)="processNext()" style="margin-left: 5px;" [disabled]="processing" [ngClass]="{'kt-spinner kt-spinner--md kt-spinner--light':processing}">
+                        {{ translateIndex == 0 ? 'Next' : (translateIndex == 1 ? 'Submit' : 'Vertify') }}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

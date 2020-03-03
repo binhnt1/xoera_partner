@@ -1,0 +1,27 @@
+<div class="row" *ngIf="paging" mvc-remove-wrapper>
+    <div class="col-md-6 col-sm-12">
+        <div class="dataTables_info">
+            <label>Showing {{from}} to {{to}} of {{paging.total}} records</label>
+            <label class="dropdownWapper dataTables_length">
+                <span>View</span>&nbsp;
+                <select id="page_size_select" class="form-custom-select custom-select-sm form-control form-control-sm">
+                    <option *ngFor="let item of sizes" [value]="item.key" [selected]="item.key == size">{{item.value}}</option>
+                </select>&nbsp;
+                <span>records</span>
+            </label>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-12">
+        <div class="dataTables_paginate paging_simple_numbers">
+            <ul class="pagination" style="visibility: visible;">
+                <li class="paginate_button page-item previous" *ngIf="paging.index > 1"><a class="page-link" title="First" (click)="navigate(1)"><i class="la la-angle-double-left"></i></a></li>
+                <li class="paginate_button page-item previous" *ngIf="paging.index > 1"><a class="page-link" title="Prev" (click)="navigate(paging.index - 1)"><i class="la la-angle-left"></i></a></li>
+                <li class="paginate_button page-item" [ngClass]="{'active':paging.index == item}" *ngFor="let item of numbers">
+                    <a class="page-link" (click)="navigate(item)">{{ item }}</a>
+                </li>
+                <li class="paginate_button page-item next" *ngIf="paging.pages > paging.index"><a class="page-link" title="Next" (click)="navigate(paging.index + 1)"><i class="la la-angle-right"></i></a></li>
+                <li class="paginate_button page-item next" *ngIf="paging.pages > paging.index"><a class="page-link" title="Last" (click)="navigate(paging.pages)"><i class="la la-angle-double-right"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</div>

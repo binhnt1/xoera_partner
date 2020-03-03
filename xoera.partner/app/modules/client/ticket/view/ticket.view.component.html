@@ -1,0 +1,311 @@
+<div class="row">
+    <div class="col-sm-12" *ngIf="ticket">
+        <div class="kt-portlet">
+            <div class="kt-portlet__head ticket-head">
+                <div class="kt-portlet__head-label">
+                    <h3 class="kt-portlet__head-title">
+                        <span>{{ ticket.Title }}</span>
+                        <span class="kt-badge kt-badge--warning kt-badge--rounded kt-badge-big">
+                            {{ TicketStatusType[ticket.StatusType] }}
+                        </span>
+                    </h3>
+                    <h3 class="kt-portlet__head-title small">
+                        <small>
+                            <span *ngIf="ticket.User">
+                                {{ ticket.User.UserName }}
+                            </span>&nbsp;
+                            <span> opened this ticket on </span>&nbsp;
+                            <span>
+                                {{ ticket.DateTime | date: 'dd MMM yyyy' }}
+                            </span>
+                        </small>
+                    </h3>
+                </div>
+                <div class="kt-portlet__head-toolbar">
+                    <div class="kt-portlet__head-actions">
+                        <a class="btn btn-outline-light btn-icon-md btn-secondary" (click)="naviageToGridTicket()">
+                            <i class="flaticon2-back"></i> Back
+                        </a>
+                        <a class="btn btn-outline-light btn-icon-md btn-secondary" *ngIf="ticket.StatusType != TicketStatusType.Closed && (admin || ticket.UserId == auth.account.Id)" (click)="openPopupEditTicket()">
+                            <i class="flaticon2-edit"></i> Edit Ticket
+                        </a>
+                        <a class="btn btn-outline-light btn-icon-md btn-secondary" *ngIf="admin && ticket.StatusType != TicketStatusType.Closed" (click)="openPopupAssignTo()">
+                            <i class="flaticon2-user"></i> Assign
+                        </a>
+                        <a style="display: none;" class="btn btn-outline-light btn-icon-md btn-secondary" *ngIf="ticket.StatusType != TicketStatusType.Closed" (click)="closeTicket()">
+                            <i class="flaticon2-correct"></i> Close Ticket
+                        </a>
+                        <a class="btn btn-outline-light btn-icon-md btn-secondary" *ngIf="ticket.StatusType == TicketStatusType.Closed" (click)="openTicket()">
+                            <i class="flaticon2-talk"></i> Re-open Ticket
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <form class="kt-form">
+                <div class="kt-portlet__body">
+                    <mvc-alert-component *ngIf="message" [text]="message" (closed)="closeMessage()"></mvc-alert-component>
+                    <div class="row">
+                        <div class="col-sm-9 ticket-inner">
+                            <div class="kt-portlet" style="margin-bottom: 0;">
+                                <div class="form-group ticket-body" style="padding-bottom: 0;">
+                                    <div class="kt-portlet__head ticket-header">
+                                        <div class="kt-portlet__head-label">
+                                            <h3 class="kt-portlet__head-title">
+                                                <span *ngIf="ticket.User">
+                                                    {{ ticket.User.UserName }}
+                                                </span>
+                                                <span class="kt-badge kt-badge--success kt-badge--rounded">commented</span>
+                                                <span>&nbsp;on&nbsp;</span>
+                                                <span>
+                                                    {{ ticket.DateTime | date: 'dd MMM yyyy' }}
+                                                </span>
+                                            </h3>
+                                        </div>
+                                        <div class="kt-portlet__head-toolbar">
+                                            <div class="kt-portlet__head-actions">
+                                                <div class="dropdown dropdown-inline">
+                                                    <a class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="flaticon-more-1"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-149px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                        <ul class="kt-nav">
+                                                            <li class="kt-nav__item" *ngIf="ticket.StatusType != TicketStatusType.Closed && (admin || ticket.UserId == auth.account.Id)">
+                                                                <a class="kt-nav__link" (click)="openPopupEditTicket()">
+                                                                    <i class="kt-nav__link-icon flaticon2-edit"></i>
+                                                                    <span class="kt-nav__link-text">Edit Ticket</span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="kt-nav__item">
+                                                                <a class="kt-nav__link" (click)="quoteTicket(ticket)">
+                                                                    <i class="kt-nav__link-icon flaticon-interface-2"></i>
+                                                                    <span class="kt-nav__link-text">Quote</span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="kt-portlet__body ticket-content">
+                                        <div>{{ ticket.Content }}</div>
+                                        <div class="ticket-note" *ngIf="admin && ticket.InternalNote">
+                                            <div class="ticket-note-header">
+                                                <span><i class="flaticon2-note"></i>&nbsp;&nbsp;</span>
+                                                <span>Note</span>
+                                            </div>
+                                            <div>{{ticket.InternalNote}}</div>
+                                        </div>
+                                        <div *ngIf="ticket.Attachments" class="ticket-attachments">
+                                            <editor [object]="ticket" property="Attachments" [decorator]="{label: '', editable: true, readonly: true, align: AlignType.Left}"></editor>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group ticket-anwsers" *ngIf="anwsers && anwsers.length > 0">
+                                    <div class="kt-portlet ticket-body" *ngFor="let item of anwsers" [ngClass]="{'ticket-plaintext': !item.Content}">
+                                        <div *ngIf="!item.Content">
+                                            <div class="kt-portlet__head ticket-header">
+                                                <div class="kt-portlet__head-label">
+                                                    <h3 class="kt-portlet__head-title">
+                                                        <span class="ticket-icon">
+                                                            <i *ngIf="item.StatusType == TicketStatusType.Open" class="flaticon2-talk"></i>
+                                                            <i *ngIf="item.StatusType == TicketStatusType.Closed" class="flaticon2-correct"></i>
+                                                            <i *ngIf="item.StatusType == TicketStatusType.Assigned" class="flaticon2-analytics-1"></i>
+                                                        </span>&nbsp;&nbsp;
+                                                        <span *ngIf="item.QuestionBy">
+                                                            {{ item.QuestionBy.UserName }}
+                                                        </span>
+                                                        <span *ngIf="item.AnswerBy">
+                                                            {{ item.AnswerBy.UserName }}
+                                                        </span>
+                                                        <span class="kt-badge kt-badge--danger kt-badge--rounded" *ngIf="item.StatusType == TicketStatusType.Closed">closed</span>
+                                                        <span class="kt-badge kt-badge--info kt-badge--rounded" *ngIf="item.StatusType == TicketStatusType.Assigned">assigned</span>
+                                                        <span class="kt-badge kt-badge--warning kt-badge--rounded" *ngIf="item.StatusType == TicketStatusType.Open">re-opened</span>
+                                                        <span *ngIf="item.StatusType == TicketStatusType.Assigned && item.AssignTo">&nbsp;to&nbsp;</span>
+                                                        <span *ngIf="item.StatusType == TicketStatusType.Assigned && item.AssignTo">
+                                                            {{ item.AssignTo.UserName }}
+                                                        </span>
+                                                        <span>&nbsp;on&nbsp;</span>
+                                                        <span>
+                                                            {{ item.DateTime | date: 'dd MMM yyyy' }}
+                                                        </span>
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="item.Content">
+                                            <div class="kt-portlet__head ticket-header" [ngClass]="{'ticket-header-admin':item.AnswerBy}">
+                                                <div class="kt-portlet__head-label">
+                                                    <h3 class="kt-portlet__head-title">
+                                                        <span *ngIf="item.QuestionBy">
+                                                            {{ item.QuestionBy.UserName }}
+                                                        </span>
+                                                        <span *ngIf="item.AnswerBy">
+                                                            {{ item.AnswerBy.UserName }}
+                                                        </span>
+                                                        <span class="kt-badge kt-badge--success kt-badge--rounded">commented</span>
+                                                        <span *ngIf="item.AssignTo">{{ item.AssignTo.UserName }}</span>
+                                                        <span>&nbsp;on&nbsp;</span>
+                                                        <span>
+                                                            {{ item.DateTime | date: 'dd MMM yyyy' }}
+                                                        </span>
+                                                    </h3>
+                                                </div>
+                                                <div class="kt-portlet__head-toolbar">
+                                                    <div class="kt-portlet__head-actions">
+                                                        <div class="dropdown dropdown-inline">
+                                                            <a class="btn btn-clean btn-sm btn-icon btn-icon-md" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="flaticon-more-1"></i>
+                                                            </a>
+                                                            <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-149px, 33px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                <ul class="kt-nav">
+                                                                    <li class="kt-nav__item" *ngIf="ticket.StatusType != TicketStatusType.Closed && (admin || item.QuestionById == auth.account.Id)">
+                                                                        <a class="kt-nav__link" (click)="openPopupEditTicketDetail(item)">
+                                                                            <i class="kt-nav__link-icon flaticon2-edit"></i>
+                                                                            <span class="kt-nav__link-text">Edit Content</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="kt-nav__item">
+                                                                        <a class="kt-nav__link" (click)="quoteTicketDetail(item)">
+                                                                            <i class="kt-nav__link-icon flaticon-interface-2"></i>
+                                                                            <span class="kt-nav__link-text">Quote</span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="kt-portlet__body ticket-content">
+                                                <div *ngIf="item.Content">
+                                                    <div class="ticket-quote quote-body" *ngIf="item.Quote">
+                                                        <div class="quote-information">
+                                                            <span><i class="flaticon2-user"></i>&nbsp;&nbsp;</span>
+                                                            <span *ngIf="item.QuoteQuestionBy">
+                                                                {{ item.QuoteQuestionBy.UserName }}
+                                                            </span>
+                                                            <span *ngIf="item.QuoteAnswerBy">
+                                                                {{ item.QuoteAnswerBy.UserName }}
+                                                            </span>
+                                                            <span>&nbsp;commented on&nbsp;</span>
+                                                            <span>
+                                                                {{ item.QuoteDateTime | date: 'dd MMM yyyy' }}
+                                                            </span>
+                                                        </div>
+                                                        <div class="quote-content">{{item.Quote}}</div>
+                                                        <div class="quote-attachments" *ngIf="item.QuoteAttachments">
+                                                            <editor [object]="item" property="QuoteAttachments" [decorator]="{label: '', editable: true, readonly: true, align: AlignType.Left}"></editor>
+                                                        </div>
+                                                    </div>
+                                                    <div>{{item.Content}}</div>
+                                                    <div class="ticket-note" *ngIf="admin && item.InternalNote">
+                                                        <div class="ticket-note-header">
+                                                            <span><i class="flaticon2-note"></i>&nbsp;&nbsp;</span>
+                                                            <span>Note</span>
+                                                        </div>
+                                                        <div>{{item.InternalNote}}</div>
+                                                    </div>
+                                                </div>
+                                                <div class="ticket-attachments" *ngIf="item.Attachments">
+                                                    <editor [object]="item" property="Attachments" [decorator]="{label: '', editable: true, readonly: true, align: AlignType.Left}"></editor>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group ticket-reply" *ngIf="anwser && ticket.StatusType != TicketStatusType.Closed">
+                                    <div class="kt-portlet" data-ktportlet="true">
+                                        <div class="kt-portlet__head">
+                                            <div class="kt-portlet__head-label">
+                                                <h3 class="kt-portlet__head-title">
+                                                    Add Reply
+                                                </h3>
+                                            </div>
+                                            <div class="kt-portlet__head-toolbar">
+                                                <div class="kt-portlet__head-group">
+                                                    <a data-ktportlet-tool="toggle" class="btn btn-sm btn-icon btn-clean btn-icon-md" (click)="togglePortletAddReply()"><i class="la la-angle-down"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="kt-portlet__body" [ngClass]="{'deactive':!portletAddReply}">
+                                            <div class="kt-portlet__content">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-3">&nbsp;</div>
+                                                        <div class="col-sm-9">
+                                                            <div class="ticket-quote" *ngIf="anwser.Quote">
+                                                                <div class="quote-close" (click)="closeQuoteContent()"><i class="la la-close"></i></div>
+                                                                <div class="quote-information">
+                                                                    <span><i class="flaticon2-user"></i>&nbsp;&nbsp;</span>
+                                                                    <span *ngIf="anwser.QuoteQuestionBy">
+                                                                        {{ anwser.QuoteQuestionBy.UserName }}
+                                                                    </span>
+                                                                    <span *ngIf="anwser.QuoteAnswerBy">
+                                                                        {{ anwser.QuoteAnswerBy.UserName }}
+                                                                    </span>
+                                                                    <span>&nbsp;commented on&nbsp;</span>
+                                                                    <span>
+                                                                        {{ anwser.QuoteDateTime | date: 'dd MMM yyyy' }}
+                                                                    </span>
+                                                                </div>
+                                                                <div class="quote-content">{{anwser.Quote}}</div>
+                                                                <div class="quote-attachments" *ngIf="anwser.QuoteAttachments">
+                                                                    <editor [object]="anwser" property="QuoteAttachments" [decorator]="{label: '', editable: true, readonly: true, align: AlignType.Left}"></editor>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <editor [object]="anwser" property="Content"></editor>
+                                                </div>
+                                                <div class="form-group" *ngIf="admin">
+                                                    <editor [object]="anwser" property="InternalNote"></editor>
+                                                </div>
+                                                <div class="form-group">
+                                                    <editor [object]="anwser" property="Attachments"></editor>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-sm-3">&nbsp;</div>
+                                                        <div class="col-sm-9">
+                                                            <button type="button" class="btn btn-primary" (click)="submitTicket()" [disabled]="processing" [ngClass]="{'kt-spinner kt-spinner--md kt-spinner--light':processing}">Submit</button>&nbsp;
+                                                            <button type="button" class="btn btn-danger" (click)="closeTicket()" [disabled]="processingStatus" [ngClass]="{'kt-spinner kt-spinner--md kt-spinner--light':processingStatus}" *ngIf="ticket.StatusType != TicketStatusType.Closed">Close Ticket</button>
+                                                            <button type="button" class="btn btn-danger" (click)="openTicket()" [disabled]="processingStatus" [ngClass]="{'kt-spinner kt-spinner--md kt-spinner--light':processingStatus}" *ngIf="ticket.StatusType == TicketStatusType.Closed">Re-Open Ticket</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group ticket-actions" *ngIf="!(anwser && ticket.StatusType != TicketStatusType.Closed)">
+                                    <button type="button" class="btn btn-danger" (click)="closeTicket()" [disabled]="processingStatus" [ngClass]="{'kt-spinner kt-spinner--md kt-spinner--light':processingStatus}" *ngIf="ticket.StatusType != TicketStatusType.Closed">Close Ticket</button>
+                                    <button type="button" class="btn btn-danger" (click)="openTicket()" [disabled]="processingStatus" [ngClass]="{'kt-spinner kt-spinner--md kt-spinner--light':processingStatus}" *ngIf="ticket.StatusType == TicketStatusType.Closed">Re-Open Ticket</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 ticket-infomation">
+                            <div class="form-group" *ngIf="ticket.Category">
+                                <div class="ticket-title">Category</div>
+                                {{ ticket.Category.Name }}
+                            </div>
+                            <div class="form-group" *ngIf="ticket.StatusType">
+                                <div class="ticket-title">Status</div>
+                                {{ TicketStatusType[ticket.StatusType] }}
+                            </div>
+                            <div class="form-group" *ngIf="ticket.PriorityType">
+                                <div class="ticket-title">Priority</div>
+                                {{ TicketPriorityType[ticket.PriorityType] }}
+                            </div>
+                            <div class="form-group" *ngIf="ticket.AssignTo">
+                                <div class="ticket-title">Assign to</div>
+                                {{ ticket.AssignTo.UserName }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <mvc-loading-component [text]="loadingText" *ngIf="loading"></mvc-loading-component>
+</div>

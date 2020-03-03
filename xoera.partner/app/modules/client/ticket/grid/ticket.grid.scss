@@ -1,0 +1,56 @@
+.kt-widget3__item {
+    padding: 20px;
+    display: flex;
+    cursor: pointer;
+    border: 1px solid transparent;
+    justify-content: space-between;
+    border-bottom: 1px dotted #ebedf2 !important;
+
+    &:hover {
+        border: 1px solid #ebedf2;
+    }
+
+    .kt-widget3__text {
+        &.title {
+            font-weight: bold;
+        }
+
+        &.information {
+            display: flex;
+        }
+    }
+
+    .kt-widget3__right {
+        display: flex;
+        align-items: center;
+
+        .ticket-title {
+            font-weight: bold;
+        }
+    }
+}
+
+.kt-badge {
+    width: auto;
+    height: auto;
+    margin: 0 5px;
+    font-size: 14px;
+    padding: 5px 10px;
+}
+
+.kt-portlet__head-actions {
+    .btn {
+        cursor: pointer;
+        &.active {
+            background: #eaecf2;
+        }
+    }
+}
+
+.dataTables_wrapper {
+    margin: 0 auto;
+
+    .page-link {
+        background: #ebe9f2;
+    }
+}

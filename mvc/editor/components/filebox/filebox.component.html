@@ -1,0 +1,4 @@
+<div *ngIf="decorator" [ngSwitch]="decorator.type" mvc-remove-wrapper>
+    <editor-filebox-file *ngSwitchCase="FileType.File" [decorator]="decorator" [property]="property" [object]="object" (objectChange)="valueChange($event)"></editor-filebox-file>
+    <editor-filebox-image *ngSwitchCase="FileType.Image" [decorator]="decorator" [property]="property" [object]="object" (objectChange)="valueChange($event)"></editor-filebox-image>
+</div>

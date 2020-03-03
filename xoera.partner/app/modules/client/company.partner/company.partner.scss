@@ -1,0 +1,19 @@
+.partner-body {
+    display: flex;
+
+    .partner-buttons {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+
+        div {
+            margin: 3px 0;
+        }
+    }
+}
+
+.kt-widget13 .kt-widget13__item>span {
+    min-width: 140px;
+    flex: unset !important;
+}

@@ -1,0 +1,34 @@
+.selectWapper {
+    .mt-checkbox-list {
+        padding-top: 10px;
+
+        .kt-checkbox {
+            margin-right: 15px;
+        }
+    }
+
+    .mt-radio-list {
+        padding-top: 10px;
+
+        .kt-radio {
+            margin-right: 15px;
+        }
+    }
+}
+
+
+.mt-radio-list,
+.mt-checkbox-list {
+    &.layout_1,
+    &.layout_rows {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
+
+    &.layout_2,
+    &.layout_columns {
+        display: flex;
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,69 @@
+<div class="kt-portlet kt-portlet--height-fluid" *ngIf="item">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                Company Summary
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="kt-widget13">
+            <div class="kt-widget13__item">
+                <span class="kt-widget13__desc">
+                    Company Name
+                </span>
+                <span class="kt-widget13__text kt-widget13__text--bold">
+                    {{ item.Name }}
+                </span>
+            </div>
+            <div class="kt-widget13__item" *ngIf="item.ContactName">
+                <span class="kt-widget13__desc kt-align-right">
+                    Contact Name:
+                </span>
+                <span class="kt-widget13__text">
+                    {{ item.ContactName }}
+                </span>
+            </div>
+            <div class="kt-widget13__item" *ngIf="item.ContactEmail">
+                <span class="kt-widget13__desc">
+                    Contact Email:
+                </span>
+                <span class="kt-widget13__text">
+                    {{ item.ContactEmail }}
+                </span>
+            </div>
+            <div class="kt-widget13__item" *ngIf="item.ContactPhone">
+                <span class="kt-widget13__desc">
+                    Contact Phone:
+                </span>
+                <span class="kt-widget13__text ">
+                    {{ item.ContactPhone }}
+                </span>
+            </div>
+            <div class="kt-widget13__item" *ngIf="item.Address">
+                <span class="kt-widget13__desc">
+                    Address:
+                </span>
+                <span class="kt-widget13__text">
+                    {{ item.Address }}
+                </span>
+            </div>
+            <div class="kt-widget13__item" *ngIf="item.Lat">
+                <span class="kt-widget13__desc">
+                    Lat:
+                </span>
+                <span class="kt-widget13__text  kt-font-brand ">
+                    {{ item.Lat }}
+                </span>
+            </div>
+            <div class="kt-widget13__item" *ngIf="item.Lng">
+                <span class="kt-widget13__desc">
+                    Lng:
+                </span>
+                <span class="kt-widget13__text  kt-font-brand ">
+                    {{ item.Lng }}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

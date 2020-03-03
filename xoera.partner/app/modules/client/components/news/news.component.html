@@ -1,0 +1,40 @@
+<div class="kt-portlet kt-portlet--height-fluid kt-widget19">
+    <div class="kt-portlet__body kt-portlet__body--fit">
+        <div class="kt-widget19__pic kt-portlet-fit--top kt-portlet-fit--sides" style="min-height: 100px; background-image: url(../assets/media//products/product4.jpg)">
+            <h3 class="kt-widget19__title kt-font-light">
+                Lastest News
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body" *ngFor="let item of items">
+        <div class="kt-widget19__wrapper">
+            <div class="kt-widget19__content">
+                <div class="kt-widget19__userpic">
+                    <img src="../assets/media/users/default.jpg" alt="">
+                </div>
+                <div class="kt-widget19__info">
+                    <a class="kt-widget19__username" (click)="navigate(item)">
+                        {{ item.Title }}
+                    </a>
+                    <span class="kt-widget19__time">
+                        {{ item.DateTime | date:'dd/MM/yyyy HH:mm' }}
+                    </span>
+                </div>
+                <div class="kt-widget19__stats">
+                    <span class="kt-widget19__number kt-font-brand">
+                        18
+                    </span>
+                    <a class="kt-widget19__comment">
+                        Views
+                    </a>
+                </div>
+            </div>
+            <div class="kt-widget19__text">
+                {{ item.Description }}
+            </div>
+        </div>
+        <div class="kt-widget19__action">
+            <a class="btn btn-sm btn-label-brand btn-bold" (click)="navigate(item)">Read More...</a>
+        </div>
+    </div>
+</div>

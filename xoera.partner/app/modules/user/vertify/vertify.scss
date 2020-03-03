@@ -1,0 +1,33 @@
+.kt-form {
+    padding: 40px 20px;
+}
+
+.kt-vertify__account-link {
+    display: flex !important;
+    cursor: default !important;
+    justify-content: space-between;
+
+    span {
+        opacity: 0.5;
+        cursor: default;
+        line-height: 50px;
+
+        &.timer {
+            opacity: 1;
+            width: 50px;
+            height: 50px;
+            color: #fff;
+            font-size: 18px;
+            line-height: 50px;
+            border-radius: 50%;
+            text-align: center;
+            display: inline-block;
+            background-color: rgba($color: #6c7293, $alpha: 0.4);
+        }
+
+        &.active {
+            opacity: 1;
+            cursor: pointer;
+        }
+    }
+}

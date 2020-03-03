@@ -1,0 +1,12 @@
+<div class="gridAction" mvc-remove-wrapper>
+    <div class="btn-group" *ngIf="actions && actions.length > 0">
+        <span *ngFor="let item of actions">
+            <button *ngIf="!item.confirm" class="tooltips" [ngClass]="item.className" [attr.data-original-title]="item.name" (click)="item.click()">
+                <i [ngClass]="item.icon"></i>
+            </button>
+            <button *ngIf="item.confirm" [id]="object[property] + '-grid-confirmation'" class="tooltips" [ngClass]="item.className" [attr.data-original-title]="item.name" [attr.data-toggle]="confirmation" [attr.data-btn-ok-label]="item.confirm.buttons[0].name" [attr.data-btn-ok-class]="item.confirm.buttons[0].className" [attr.data-btn-ok-icon-content]="item.confirm.buttons[0].icon" [attr.data-btn-cancel-label]="item.confirm.buttons[1].name" [attr.data-btn-cancel-class]="item.confirm.buttons[1].className" [attr.data-btn-cancel-icon-content]="item.confirm.buttons[1].icon" [attr.data-title]="item.confirm.title" [attr.data-content]="item.confirm.content">
+                <i [ngClass]="item.icon"></i>
+            </button>
+        </span>
+    </div>
+</div>

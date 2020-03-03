@@ -1,0 +1,5 @@
+<div *ngIf="decorator" [ngSwitch]="decorator.type" mvc-remove-wrapper>  
+        <editor-datetimebox-date *ngSwitchCase="DateTimeType.Date" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-datetimebox-date>
+        <editor-datetimebox-time *ngSwitchCase="DateTimeType.Time" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-datetimebox-time>
+        <editor-datetimebox-datetime *ngSwitchCase="DateTimeType.DateTime" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-datetimebox-datetime>
+    </div>

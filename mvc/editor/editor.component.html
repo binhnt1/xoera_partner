@@ -1,0 +1,6 @@
+<editor-filebox *ngIf="decorator && decorator.dataType == DataType.File" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-filebox>
+<editor-boolbox *ngIf="decorator && decorator.dataType == DataType.Boolean" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-boolbox>
+<editor-stringbox *ngIf="decorator && decorator.dataType == DataType.String" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-stringbox>
+<editor-numberbox #numberbox *ngIf="decorator && decorator.dataType == DataType.Number" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-numberbox>
+<editor-dropdownbox #dropdownbox *ngIf="decorator && decorator.dataType == DataType.DropDown" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-dropdownbox>
+<editor-datetimebox #datetimebox *ngIf="decorator && decorator.dataType == DataType.DateTime" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-datetimebox>

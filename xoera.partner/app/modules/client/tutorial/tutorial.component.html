@@ -1,0 +1,38 @@
+<div class="kt-portlet kt-faq-v1">
+    <div class="kt-portlet__head">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title">
+                Tutorial
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <div class="row">
+            <div class="col-xl-3">
+                <ul class="kt-nav" id="kt_nav" role="tablist">
+                    <li class="kt-nav__item" *ngFor="let item of categories" [ngClass]="{'kt-nav__item--active':item.Id == category.Id}">
+                        <a class="kt-nav__link collapsed" (click)="openTutorials(item)">
+                            <span class="kt-nav__link-text">{{ item.Name }}</span>
+                            <span class="kt-nav__link-arrow" *ngIf="item.Id == category.Id"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-xl-9" *ngIf="tutorials">
+                <div class="accordion accordion-solid accordion-toggle-plus">
+                    <div class="card" *ngFor="let item of tutorials">
+                        <div class="card-header" [id]="'heading_' + item.Id">
+                            <div class="card-title collapsed" data-toggle="collapse" [attr.data-target]="'#collapse_' + item.Id" aria-expanded="true" [attr.aria-controls]="'collapse_' + item.Id">
+                                {{ item.Title }}
+                            </div>
+                        </div>
+                        <div [id]="'collapse_' + item.Id" class="collapse" [attr.aria-labelledby]="'heading_' + item.Id">
+                            <div class="card-body"  [innerHTML]="item.Content | sanitizeHtml">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

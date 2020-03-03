@@ -1,0 +1,483 @@
+<div *ngIf="loadConfiguration">
+    <mvc-alert-component *ngIf="message" [text]="message" (closed)="closeMessage()"></mvc-alert-component>
+    <div class="row">
+        <div class="col-sm-7">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group" style="display: none;">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="widows: 200px; margin: 0;">
+                                {{ SearchAddressType[data.SearchAddressType] }}
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" (click)="addressTypeChange(SearchAddressType.Local)">{{SearchAddressType[SearchAddressType.Local]}}</a>
+                                <a class="dropdown-item" (click)="addressTypeChange(SearchAddressType.National)">{{SearchAddressType[SearchAddressType.National]}}</a>
+                                <a class="dropdown-item" (click)="addressTypeChange(SearchAddressType.Google)">{{SearchAddressType[SearchAddressType.Google]}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div style="display: flex; justify-content: space-between;">
+                            <div>
+                                <label style="width: 70px;">Pickup</label>
+                                <a class="dropdown-search-type dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">[{{ SearchAddressType[data.SearchAddressType] }}]</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" (click)="addressTypeChange(SearchAddressType.Local)">{{SearchAddressType[SearchAddressType.Local]}}</a>
+                                    <a class="dropdown-item" (click)="addressTypeChange(SearchAddressType.National)">{{SearchAddressType[SearchAddressType.National]}}</a>
+                                    <a class="dropdown-item" (click)="addressTypeChange(SearchAddressType.Google)">{{SearchAddressType[SearchAddressType.Google]}}</a>
+                                </div>
+                            </div>
+                            <a class="postcode" *ngIf="!pickupInput && item.PickUp">{{ item.PickUp.postcode }}</a>
+                        </div>
+                        <xoera-partner-editor-autocomplete [type]="AutocompleteType.Pickup" [(object)]="item.PickUp" (selectedChange)="pickupChanged()" (inputChange)="pickupInputChange()">
+                        </xoera-partner-editor-autocomplete>
+                    </div>
+
+                    <div class="form-group">
+                        <div style="display: flex; justify-content: space-between; position: relative;">
+                            <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                                <label style="width: 70px; margin: 0;">Dropoff</label>
+                                <a class="dropdown-search-type dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">[{{ SearchAddressType[data.SearchAddressType] }}]</a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" (click)="addressTypeChange(SearchAddressType.Local)">{{SearchAddressType[SearchAddressType.Local]}}</a>
+                                    <a class="dropdown-item" (click)="addressTypeChange(SearchAddressType.National)">{{SearchAddressType[SearchAddressType.National]}}</a>
+                                    <a class="dropdown-item" (click)="addressTypeChange(SearchAddressType.Google)">{{SearchAddressType[SearchAddressType.Google]}}</a>
+                                </div>
+                                <div (clickOutside)="toggleViaAddress(true)">
+                                    <a class="add-location dropdown-toggle" *ngIf="item.PickUp && item.PickDown" (click)="toggleViaAddress()">[<i class="flaticon-placeholder-3"></i> Add Via Location<span *ngIf="viaAddressCount">&nbsp;-&nbsp;{{ viaAddressCount }}</span>]</a>
+                                    <div class="add-options-content add-location-content" [ngClass]="{'active':popupViaAddressVisible}">
+                                        <div class="form-group">
+                                            <label *ngIf="item.PickUp">{{ item.PickUp.fullAddress }}</label>
+                                        </div>
+                                        <ul class="timeline">
+                                            <li class="timeline-inverted" *ngFor="let via of item.ViaAddress; let i = index;">
+                                                <div class="timeline-badge info"></div>
+                                                <div style="margin-top: 0; margin-left: 40px; display: flex;">
+                                                    <xoera-partner-editor-autocomplete [type]="AutocompleteType.ViaAddress" [object]="item.ViaAddress[i]" (selectedChange)="viaAddressChanged($event, i)">
+                                                    </xoera-partner-editor-autocomplete>
+                                                    <button type="button" class="btn btn-danger" style="min-width: 45px; margin: 0;" (click)="removeViaLocation($event, i)"><i class="flaticon2-delete" style="padding: 0;"></i></button>
+                                                    <button type="button" class="btn btn-success" style="min-width: 45px; margin: 0;" [disabled]="i == 0" (click)="upViaLocation($event, i)"><i class="flaticon2-up" style="padding: 0;"></i></button>
+                                                    <button type="button" class="btn btn-success" style="min-width: 45px; margin: 0;" [disabled]="i == item.ViaAddress.length - 1" (click)="downViaLocation($event, i)"><i class="flaticon2-down" style="padding: 0;"></i></button>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div class="form-group">
+                                            <button *ngIf="!item.ViaAddress || item.ViaAddress.length < 5" type="button" class="btn btn-warning" style="min-width: 100px;" (click)="addViaLocation($event)"><i class="flaticon2-plus" style="padding: 0;"></i> Add More</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a class="postcode" *ngIf="!dropoffInput && item.PickDown">{{ item.PickDown.postcode }}</a>
+                        </div>
+                        <xoera-partner-editor-autocomplete [type]="AutocompleteType.Dropoff" [(object)]="item.PickDown" (selectedChange)="dropoffChanged()" (inputChange)="dropoffInputChange()">
+                        </xoera-partner-editor-autocomplete>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Notes to Driver</label>
+                        <editor [(object)]="item" property="DriverNote" [decorator]="{ label: '', editable: true }"></editor>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <editor [(object)]="item" property="PickType" [decorator]="{ label: '', editable: true }" (valueChange)="pickTypeChanged()"></editor>
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <editor [(object)]="item" property="DateTime" [disabled]="item.PickType == PickType.Now" [decorator]="{ label: '', editable: true }" (valueChange)="datetimeChanged()"></editor>
+                        </div>
+                        <div class="col-sm-7">
+                            <editor [(object)]="item" property="ReturnType" [decorator]="{ label: '', editable: true }" (valueChange)="returnTypeChanged()"></editor>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+                        <div style="width: 40%">
+                            <label>Passenger Phone</label>
+                            <editor [(object)]="item" property="PassengerPhone" [decorator]="{ label: '', editable: true }"></editor>
+                        </div>
+                        <div style="width: 60%; margin-left: 10px;">
+                            <label>Name</label>
+                            <editor [(object)]="item" property="PassengerName" [decorator]="{ label: '', editable: true }"></editor>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <label>Vehicle</label>
+                                <editor [(object)]="item" property="Vehicle" [decorator]="{ label: '', editable: true }"></editor>
+                            </div>
+                            <div class="col-sm-7">
+                                <label>&nbsp;</label>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <editor style="width: 32%;" [(object)]="item" property="Passenger" [decorator]="{ label: '', editable: true }"></editor>
+                                    <editor style="width: 32%;" [(object)]="item" property="Luggage" [decorator]="{ label: '', editable: true }"></editor>
+                                    <editor style="width: 32%;" [(object)]="item" property="HandBag" [decorator]="{ label: '', editable: true }"></editor>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div style="display: flex; justify-content: space-between;">
+                            <div style="width: 40%">
+                                <label>Caller Phone</label>
+                                <editor [(object)]="item" property="CallerPhone" [decorator]="{ label: '', editable: true, id: 'callerphone_' + item.Key }" (valueChange)="callerPhoneChanged()"></editor>
+                            </div>
+                            <div style="width: 60%; margin-left: 10px;">
+                                <label>Name</label>
+                                <div style="display: flex;">
+                                    <editor style="width: 100%;" [(object)]="item" property="CallerName" [decorator]="{ label: '', editable: true }"></editor>
+                                    <div (clickOutside)="toggleCaller(true)">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-success" style="min-width: 45px;" (click)="toggleCaller()"><i class="flaticon-rotate" style="padding: 0;"></i></button>
+                                            <button type="button" class="btn btn-warning" style="min-width: 45px; margin: 0;" (click)="popupBookingHistory()"><i class="flaticon-time" style="padding: 0;"></i></button>
+                                        </div>
+                                        <div class="add-options-content w450" [ngClass]="{'active':popupCallerVisible}">
+                                            <div class="form-group row">
+                                                <div class="col-sm-6">
+                                                    <label>Surname</label>
+                                                    <editor [(object)]="item" property="CallerSurName" [decorator]="{ label: '', editable: true }"></editor>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label>Email</label>
+                                                    <editor [(object)]="item" property="CallerEmail" [decorator]="{ label: '', editable: true }"></editor>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-12" style="display: flex; justify-content: space-between; align-items: baseline;">
+                                                    <label>Comments</label>
+                                                    <editor [(object)]="item" property="CallerBlacklisted" [decorator]="{ label: '', editable: true }"></editor>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <editor [(object)]="item" property="CallerComments" [decorator]="{ label: '', editable: true }"></editor>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-sm-12">
+                                                    <label>Notes (Visible to the Driver)</label>
+                                                    <editor [(object)]="item" property="CallerNotes" [decorator]="{ label: '', editable: true }"></editor>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="section2">
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <label>Fleet</label>
+                                <editor #editorFleet [(object)]="item" property="Fleet" [decorator]="{ label: '', editable: true }" (valueChange)="fleetChanged()"></editor>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Payment Method</label>
+                        <div style="display: flex;">
+                            <editor style="width: 100%;" [(object)]="item" property="Payment" [decorator]="{ label: '', editable: true }" (valueChange)="paymentChanged()"></editor>
+                            <div (clickOutside)="togglePaymentDetails(true)">
+                                <button type="button" class="btn btn-success" (click)="togglePaymentDetails()" [disabled]="!priceEnabled">Payment Details</button>
+                                <div class="add-options-content" [ngClass]="{'active':popupPaymentDetailVisible}">
+                                    <div class="form-group">
+                                        <label>Card</label>
+                                        <editor #editorPaymentCard [(object)]="item" property="PaymentCard" [decorator]="{ label: '', editable: true }" (valueChange)="paymentCardChanged()"></editor>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Cash</label>
+                                        <editor #editorPaymentCash [(object)]="item" property="PaymentCash" [decorator]="{ label: '', editable: true }" (valueChange)="paymentCashChanged()"></editor>
+                                    </div>
+                                    <div class="form-group">
+                                        <editor [(object)]="item" property="PaymentMade" [decorator]="{ label: '', description: 'Payment Made', editable: true }"></editor>
+                                    </div>
+                                    <div class="form-group center">
+                                        <button type="button" class="btn btn-success" (click)="toggleCardPayment()">Card Payment</button>
+                                    </div>
+                                </div>
+                                <div class="add-options-content w700" [ngClass]="{'active':popupCardPaymentVisible}">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <label>Name on Card</label>
+                                            <editor [(object)]="card" property="Name" [decorator]="{ label: '', editable: true }"></editor>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>Address Line</label>
+                                            <editor [(object)]="card" property="Address" [decorator]="{ label: '', editable: true }"></editor>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <label>Card Number</label>
+                                            <editor [(object)]="card" property="CardNumber" [decorator]="{ label: '', editable: true }"></editor>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>City</label>
+                                            <editor [(object)]="card" property="City" [decorator]="{ label: '', editable: true }"></editor>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <div class="row" style="display: flex;">
+                                                <div class="col-sm-4" style="padding-right: 5px;">
+                                                    <label>Exp Month</label>
+                                                    <editor #editorExpMonth [(object)]="card" property="ExpMonth" [decorator]="{ label: '', editable: true }"></editor>
+                                                </div>
+                                                <div class="col-sm-4" style="padding-left: 5px; padding-right: 5px;">
+                                                    <label>Exp Year</label>
+                                                    <editor #editorExpYear [(object)]="card" property="ExpYear" [decorator]="{ label: '', editable: true }"></editor>
+                                                </div>
+                                                <div class="col-sm-4" style="padding-left: 5px;">
+                                                    <label>CVC</label>
+                                                    <editor [(object)]="card" property="Cvc" [decorator]="{ label: '', editable: true }"></editor>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row" style="display: flex;">
+                                                <div class="col-sm-6" style="padding-right: 5px;">
+                                                    <label>Postcode</label>
+                                                    <editor [(object)]="card" property="PostCode" [decorator]="{ label: '', editable: true }"></editor>
+                                                </div>
+                                                <div class="col-sm-6" style="padding-left: 5px;">
+                                                    <label>Country</label>
+                                                    <editor [(object)]="card" property="Country" [decorator]="{ label: '', editable: true }"></editor>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group center" style="margin-top: 20px;">
+                                        <button type="button" class="btn btn-success" (click)="processPayment()">Process Payment</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <label>Booker</label>
+                                <editor #editorBooker [(object)]="item" property="Booker" [decorator]="{ label: '', editable: true }" (valueChange)="bookerChanged()"></editor>
+                            </div>
+                            <div class="col-sm-7">
+                                <label>Booker Ref</label>
+                                <editor [(object)]="item" property="BookerRef" [decorator]="{ label: '', editable: true }"></editor>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" style="margin-top: -10px;">
+                        <editor [(object)]="item" property="DriverType" [decorator]="{ label: '', editable: true }"></editor>
+                        <div style="display: flex;">
+                            <editor #editorDriver style="width: 100%;" [(object)]="item" property="Driver" [decorator]="{ label: '', editable: true }"></editor>
+                            <div (clickOutside)="toggleDriverPrice(true)">
+                                <button type="button" class="btn btn-success" (click)="toggleDriverPrice()" [disabled]="!priceEnabled">Driver Price</button>
+                                <div class="add-options-content w450" [ngClass]="{'active':popupDriverPriceVisible}" style="margin-top: 10px;">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <label>Booking Fee</label>
+                                            <editor [(object)]="item" property="DriverBookingFee" [decorator]="{ label: '', editable: true }" (valueChange)="bookingFeeChanged()"></editor>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>Booker's Comm (Fixed)</label>
+                                            <editor [(object)]="item" property="DriverBookerCommFixed" [disabled]="bookersFixedCommEnabled" [decorator]="{ label: '', editable: true }" (valueChange)="bookersFixedCommChanged()"></editor>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <label>Topup</label>
+                                            <editor [(object)]="item" property="DriverTopup" [decorator]="{ label: '', editable: true }" (valueChange)="topupChanged()"></editor>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>Booker's Comm (%)</label>
+                                            <editor [(object)]="item" property="DriverBookerCommPercent" [disabled]="bookersPercentCommEnabled" [decorator]="{ label: '', editable: true }" (valueChange)="bookersPercentCommChanged()"></editor>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <label>Parking</label>
+                                            <editor [(object)]="item" property="DriverParking" [decorator]="{ label: '', editable: true }" (valueChange)="parkingChanged()"></editor>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>Driver Price</label>
+                                            <editor [(object)]="item" property="DriverPrice" [disabled]="driverPriceEnabled" [decorator]="{ label: '', editable: true }" (valueChange)="driverPriceChanged()"></editor>
+                                        </div>
+                                    </div>
+                                    <div class="form-group center">
+                                        <div class="text">
+                                            Earning: {{ item.DriverEarning }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label>Account</label>
+                        <div style="display: flex;">
+                            <editor #editorAccount style="width: 100%;" [(object)]="item" property="Account" [decorator]="{ label: '', editable: true }" (valueChange)="accountChanged()"></editor>
+                            <div (clickOutside)="toggleAdditionalInfo(true)">
+                                <button type="button" class="btn btn-success" (click)="toggleAdditionalInfo()">Additional Info</button>
+                                <div class="add-options-content" [ngClass]="{'active':popupAdditionalInfoVisible}">
+                                    <div class="form-group">
+                                        <label>Customer Ref</label>
+                                        <editor [(object)]="item" property="AccountCustomerRef" [decorator]="{ label: '', editable: true }"></editor>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Authorised By</label>
+                                        <editor [(object)]="item" property="AccountAuthorisedBy" [decorator]="{ label: '', editable: true }"></editor>
+                                    </div>
+                                    <div class="form-group">
+                                        <editor [(object)]="item" property="AccountSignatureRequired" [decorator]="{ label: '', description: 'Signature Required', editable: true }"></editor>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>Price</label>
+                        <div style="display: flex;">
+                            <editor style="width: 100%;" [(object)]="item" property="Price" [decorator]="{ label: '', editable: true }"></editor>
+                            <div (clickOutside)="toggleAdditionalPrice(true)">
+                                <button type="button" class="btn btn-success" (click)="toggleAdditionalPrice()" [disabled]="!priceEnabled">Additional Price</button>
+                                <div class="add-options-content w450" [ngClass]="{'active':popupAdditionalPriceVisible}">
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <label>Flight Number</label>
+                                            <editor [(object)]="item" property="FlightNumber" [decorator]="{ label: '', editable: true }"></editor>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>&nbsp;</label>
+                                            <editor [(object)]="item" property="MeetAndGreet" [decorator]="{ label: '', editable: true }"></editor>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <label>Arriving From</label>
+                                            <editor [(object)]="item" property="ArrivingFrom" [decorator]="{ label: '', editable: true }"></editor>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>Waiting Charge</label>
+                                            <editor [(object)]="item" property="WaitingCharge" [decorator]="{ label: '', editable: true }"></editor>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <label>Child Seat (3-6Y)</label>
+                                            <editor [(object)]="item" property="SmallChildSeat" [decorator]="{ label: '', editable: true }"></editor>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>Child Seat (6-12Y)</label>
+                                            <editor [(object)]="item" property="LargeChildSeat" [decorator]="{ label: '', editable: true }"></editor>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6">
+                                            <label>Small Pet</label>
+                                            <editor [(object)]="item" property="SmallPet" [decorator]="{ label: '', editable: true }"></editor>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>Large Pet</label>
+                                            <editor [(object)]="item" property="LargePet" [decorator]="{ label: '', editable: true }"></editor>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <editor [(object)]="item" property="RouterType" [decorator]="{ label: '', editable: true }"></editor>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label>Office Notes</label>
+                        <editor [(object)]="item" property="OfficeNote" [decorator]="{ label: '', editable: true }"></editor>
+                    </div>
+                    <div class="col-sm-6" style="margin-top: -10px;">
+                        <div class="row">
+                            <div class="col-sm-12" style="display: flex; justify-content: space-between; align-items: baseline;">
+                                <label>Total</label>
+                                <editor [(object)]="item" property="BookingConfirmationSms" [disabled]="!bookingConfirmationSmsEnabled" [decorator]="{ label: '', editable: true }"></editor>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="text text-price">
+                                    £{{ item.Price | number:'1.2-2' }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-5 form-group-right">
+            <mvc-loading-component [text]="loadingMapText" *ngIf="loadingMap"></mvc-loading-component>
+            <div class="map" [id]="'map_' + item.Key"></div>
+            <div class="section3">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <label class="col-form-label col-sm-7">System Price</label>
+                            <div class="col-form-label col-sm-5">
+                                £{{ item.Price | number:'1.2-2' }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <editor [(object)]="item" property="NearestDriver" [decorator]="{ editable: false, grid:'7-5' }"></editor>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <editor [(object)]="item" property="PickUpZone" [decorator]="{ label: 'Pickup Zone', editable: false, grid:'7-5' }"></editor>
+                    </div>
+                    <div class="col-sm-6">
+                        <editor [(object)]="item" property="DropOffZone" [decorator]="{ label: 'Dropoff Zone', editable: false, grid:'7-5' }"></editor>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <editor [(object)]="item" property="NoOfVehicles" [decorator]="{ editable: false, grid:'7-5' }"></editor>
+                    </div>
+                    <div class="col-sm-6">
+                        <editor [(object)]="item" property="LeadTime" [decorator]="{ editable: false, grid:'7-5' }"></editor>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <editor [(object)]="item" property="RouterDistance" [decorator]="{ editable: false, grid:'7-5', unit: 'Mile' }"></editor>
+                    </div>
+                    <div class="col-sm-6">
+                        <editor [(object)]="item" property="DistanceFromDriver" [decorator]="{ editable: false, grid:'7-5', unit: 'Mile' }"></editor>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <editor [(object)]="item" property="TravelTime" [decorator]="{ editable: false, grid:'7-5', unit: 'Min' }"></editor>
+                    </div>
+                    <div class="col-sm-6">
+                        <editor [(object)]="item" property="TravelTimeFromDriver" [decorator]="{ editable: false, grid:'7-5', unit: 'Min' }"></editor>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group center actions">
+            <button type="button" class="btn btn-primary" (click)="saveBooking()" [disabled]="processing || !saveBookingEnabled" [ngClass]="{'kt-spinner kt-spinner--md kt-spinner--light':processing}">Save</button>&nbsp;
+            <button type="button" class="btn btn-danger" (click)="resetForm()">Reset Form</button>
+        </div>
+    </div>
+</div>
+<mvc-loading-component [text]="loadingText" *ngIf="loading"></mvc-loading-component>

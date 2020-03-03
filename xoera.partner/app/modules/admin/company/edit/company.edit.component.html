@@ -1,0 +1,26 @@
+<form class="kt-form kt-form--label-right" style="min-height: 50vh;">
+    <div class="kt-portlet__body" *ngIf="item">
+        <div class="form-group row">
+            <editor style="width: 100%" [(object)]="item" property="Name"></editor>
+        </div>
+        <div class="form-group row">
+            <editor style="width: 100%" [(object)]="item" property="Address" [decorator]="{id:'company-address'}"></editor>
+        </div>
+        <div class="form-group row">
+            <editor style="width: 100%" [(object)]="item" property="ContactName"></editor>
+        </div>
+        <div class="form-group row">
+            <editor style="width: 100%" [(object)]="item" property="ContactPhone"></editor>
+        </div>
+        <div class="form-group row">
+            <editor style="width: 100%" [(object)]="item" property="ContactEmail"></editor>
+        </div>
+        <div class="form-group row">
+            <editor style="width: 100%" [(object)]="item" property="Lat" [decorator]="{readonly:true}"></editor>
+        </div>
+        <div class="form-group row">
+            <editor style="width: 100%" [(object)]="item" property="Lng" [decorator]="{readonly:true}"></editor>
+        </div>
+    </div>
+    <mvc-loading-component [text]="Loading" *ngIf="loading"></mvc-loading-component>
+</form>

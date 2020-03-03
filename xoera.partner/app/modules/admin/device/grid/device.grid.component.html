@@ -1,0 +1,48 @@
+<div class="kt-portlet kt-portlet--fit kt-portlet--head-lg kt-portlet--height-fluid" style="margin-top: 20px;">
+    <div class="kt-portlet__body kt-portlet__body--fit">
+        <div class="kt-widget17">
+            <div class="kt-widget17__visual kt-widget17__visual--chart kt-portlet-fit--top kt-portlet-fit--sides">
+                <div class="kt-widget17__chart">
+                    <div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                        <div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                            <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="kt-widget17__stats" *ngIf="items">
+                <div class="kt-widget17__items">
+                    <div class="kt-widget17__item" *ngFor="let item of items" [ngClass]="{'active':item.Enabled}">
+                        <a>
+                            <div class="btn-group">
+                                <button aria-expanded="false" aria-haspopup="true" class="btn btn-default btn-icon-sm" data-toggle="dropdown" type="button">
+                                    <i class="flaticon-more-v2"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <ul class="kt-nav">
+                                        <li class="kt-nav__item">
+                                            <a class="kt-nav__link" (click)="navigate(item)"><i class="kt-nav__link-icon flaticon-edit"></i>&nbsp; <span class="kt-nav__link-text">Edit</span></a></li>
+                                        <li class="kt-nav__item">
+                                            <a class="kt-nav__link" (click)="connect(item)"><i class="kt-nav__link-icon flaticon-support"></i>&nbsp; <span class="kt-nav__link-text">Connect</span></a></li>
+                                        <li class="kt-nav__item">
+                                    </ul>
+                                </div>
+                            </div>
+                            <span class="kt-widget17__subtitle">
+                                {{item.Name}}
+                            </span>
+                            <span class="kt-widget17__desc">
+                                {{item.Ip}}:{{item.Port}}
+                            </span>
+                            <span class="kt-widget17__desc">
+                                Location: {{item.Location}}
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<mvc-loading-component [text]="Loading" *ngIf="loading"></mvc-loading-component>

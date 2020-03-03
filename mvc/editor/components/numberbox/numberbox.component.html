@@ -1,0 +1,4 @@
+<div *ngIf="decorator" [ngSwitch]="decorator.type" mvc-remove-wrapper>
+    <editor-numberbox-text *ngSwitchCase="NumberType.Text" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-numberbox-text>
+    <editor-numberbox-number #number *ngSwitchCase="NumberType.Numberic" [decorator]="decorator" [property]="property" [disabled]="disabled" [(object)]="object" (valueChange)="valueChanged($event)"></editor-numberbox-number>
+</div>

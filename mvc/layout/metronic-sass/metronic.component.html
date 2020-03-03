@@ -1,0 +1,31 @@
+<div class="kt-page--fixed kt-header--fixed kt-header--minimize-topbar kt-header-mobile--fixed kt-subheader--enabled kt-subheader--transparent">
+    <div class="kt-grid kt-grid--hor kt-grid--root">
+        <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper " id="kt_wrapper" style="min-height: 100vh;">
+
+                <layout-metronic-header [theme]="ThemeType.MetronicSass"></layout-metronic-header>
+                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-grid--stretch">
+                    <div class="kt-container kt-body  kt-grid kt-grid--ver" id="kt_body">
+                        <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+
+                            <layout-metronic-subheader></layout-metronic-subheader>
+
+                            <!-- begin:: Content -->
+                            <div class="kt-content kt-grid__item kt-grid__item--fluid">
+                                <router-outlet></router-outlet>
+                            </div>
+
+                            <!-- end:: Content -->
+                        </div>
+                    </div>
+                </div>
+
+                <layout-metronic-footer [theme]="ThemeType.MetronicSass"></layout-metronic-footer>
+            </div>
+        </div>
+    </div>
+    <layout-metronic-rightbar></layout-metronic-rightbar>
+    <div id="kt_scrolltop" class="kt-scrolltop">
+        <i class="fa fa-arrow-up"></i>
+    </div>
+</div>

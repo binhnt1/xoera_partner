@@ -1,0 +1,45 @@
+<div class="kt-portlet kt-portlet--skin-solid kt-portlet--solid-warning kt-portlet--head-lg kt-portlet--head-overlay kt-portlet--height-fluid">
+    <div class="kt-portlet__head kt-portlet__head--noborder">
+        <div class="kt-portlet__head-label">
+            <h3 class="kt-portlet__head-title kt-font-light">
+                Licence Detail
+            </h3>
+        </div>
+    </div>
+    <div class="kt-portlet__body" *ngIf="item">
+            <div class="kt-widget28">
+                <div class="kt-widget28__wrapper kt-portlet__space-x">
+
+                    <!-- begin::Tab Content -->
+                    <div class="tab-content">
+                        <div id="menu11" class="tab-pane active">
+                            <div class="kt-widget28__tab-items">
+                                <div class="kt-widget28__tab-item">
+                                    <span>Key</span>
+                                    <span>{{ item.Key }}</span>
+                                </div>
+                                <div class="kt-widget28__tab-item">
+                                    <span>Expiry Date</span>
+                                    <span>{{ item.ExpiryDate | date:'dd/MM/yyyy HH:mm' }}</span>
+                                </div>
+                                <div class="kt-widget28__tab-item">
+                                    <span>DeviceId</span>
+                                    <span>{{ item.DeviceId }}</span>
+                                </div>
+                                <div class="kt-widget28__tab-item">
+                                    <span>Description</span>
+                                    <span>{{ item.Description }}</span>
+                                </div>
+                                <div class="kt-widget28__tab-item">
+                                    <span>Desktop Client Key</span>
+                                    <span style="word-break: break-all;">{{ item.DesktopClientKey }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- end::Tab Content -->
+                </div>
+            </div>
+        </div>
+</div>

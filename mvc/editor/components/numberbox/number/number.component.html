@@ -1,0 +1,24 @@
+<div *ngIf="decorator" class="numberWapper" mvc-remove-wrapper>
+        <div *ngIf="!decorator.label && !decorator.editable" class="form-view" [ngClass]="classAlign">
+            {{ decorator.valueDisplay }}<span *ngIf="decorator.valueDisplay && decorator.unit">&nbsp;{{ decorator.unit }}</span>
+        </div>
+        <div *ngIf="!decorator.label && decorator.editable" class="input-group" [ngClass]="classAlign">
+            <div class="input-group" [ngClass]="{'has-error': !decorator.valid}">
+                <input type="text" autocomplete="off" class="form-control" [ngClass]="{'is-invalid': !decorator.valid}" [id]="decorator.id" [placeholder]="decorator.placeholder + (decorator.required ? ' *' : '')" [readonly]="decorator.readonly" [disabled]="disabled" [(ngModel)]="object[decorator.property]">
+                <span class="error" *ngIf="!decorator.valid">{{ decorator.message }}</span>
+            </div>
+        </div>
+        <div *ngIf="decorator.label && !decorator.editable" class="input-group">
+            <label class="col-form-label" [ngClass]="classLabel">{{ decorator.label }}</label>
+            <div class="col-form-label" [ngClass]="classInput">{{ decorator.valueDisplay }}<span *ngIf="decorator.valueDisplay && decorator.unit">&nbsp;{{ decorator.unit }}</span></div>
+        </div>
+        <div *ngIf="decorator.label && decorator.editable" class="input-group">
+            <label class="col-form-label" [ngClass]="classLabel">{{ decorator.label }} <span class="star" *ngIf="decorator.required">*</span></label>
+            <div [ngClass]="classInput">
+                <div class="input-group" [ngClass]="{'has-error': !decorator.valid}">
+                    <input type="text" class="form-control" [ngClass]="{'is-invalid': !decorator.valid}" [id]="decorator.id" [placeholder]="decorator.placeholder" [readonly]="decorator.readonly" [disabled]="disabled" [(ngModel)]="object[decorator.property]">
+                    <span class="error" *ngIf="!decorator.valid">{{ decorator.message }}</span>
+                </div>
+            </div>
+        </div>
+    </div>

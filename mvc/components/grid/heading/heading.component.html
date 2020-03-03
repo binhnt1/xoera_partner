@@ -1,0 +1,32 @@
+<div class="kt-portlet__head" mvc-remove-wrapper>
+    <div class="kt-portlet__head-label">
+        <div class="btn-group" *ngIf="actions && actions.length > 0">
+            <button *ngFor="let item of actions" [ngClass]="item.className" (click)="item.click()"> {{ item.name }}
+                <i [ngClass]="item.icon"></i>
+            </button>
+        </div>
+    </div>
+    <div class="kt-portlet__head-toolbar">
+        <div *ngIf="tools && tools.length > 0" class="dropdown dropdown-inline pull-right">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default btn-icon-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <i class="fa fa-share"></i> Tools
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <ul class="kt-nav">
+                        <li *ngFor="let item of tools" class="kt-nav__item" [ngClass]="{'divider': item.divider}">
+                            <a *ngIf="!item.divider" class="kt-nav__link" (click)="item.click()">
+                                <i class="kt-nav__link-icon" [ngClass]="item.icon"></i>&nbsp;
+                                <span class="kt-nav__link-text">{{ item.name }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="btn-group pull-right" style="margin-left: 5px;">
+            <input type="search" class="form-control input-sm input-medium input-inline" placeholder="Search">
+            <button class="btn btn-success btn-group btn-icon-sm"><i class="la la-search"></i> Search</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,4 @@
+<div *ngIf="decorator" [ngSwitch]="decorator.type" mvc-remove-wrapper>
+    <editor-boolbox-checkbox *ngSwitchCase="BooleanType.Checkbox" [disabled]="disabled" [decorator]="decorator" [property]="property" [(object)]="object"></editor-boolbox-checkbox>
+    <editor-boolbox-radiobutton *ngSwitchCase="BooleanType.RadioButton" [disabled]="disabled" [decorator]="decorator" [property]="property" [(object)]="object"></editor-boolbox-radiobutton>
+</div>

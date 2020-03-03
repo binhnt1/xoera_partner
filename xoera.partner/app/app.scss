@@ -1,0 +1,120 @@
+html {
+    &.noscroll {
+        overflow: hidden;
+
+        body {
+            overflow: hidden;
+        }
+    }
+}
+
+body {
+    position: relative;
+}
+
+a {
+    cursor: pointer;
+}
+
+.has-error {
+    position: relative;
+    margin-bottom: 15px !important;
+
+    .fa-warning {
+        color: red;
+    }
+
+    span.error {
+        left: 0;
+        color: red;
+        bottom: -20px;
+        display: block;
+        position: absolute;
+        white-space: nowrap;
+    }
+
+    .form-control {
+        border-color: red !important;
+    }
+
+    .tox-tinymce {
+        border-color: red !important;
+    }
+
+    .btn.dropdown-toggle {
+        border-color: red !important;
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+:focus {
+    outline: none;
+}
+
+textarea {
+    resize: none;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.gridHeader {
+    .filter {
+        visibility: hidden;
+
+        &.active {
+            visibility: visible;
+        }
+    }
+
+    &:before {
+        visibility: hidden;
+    }
+
+    &:after {
+        visibility: hidden;
+    }
+
+    &.sorting_asc,
+    &.sorting_desc {
+        &:after {
+            visibility: visible;
+        }
+
+        &:before {
+            visibility: visible;
+        }
+    }
+
+    &:hover {
+        .filter {
+            visibility: visible;
+        }
+
+        &:before {
+            visibility: visible;
+        }
+
+        &:after {
+            visibility: visible;
+        }
+    }
+}
+
+.kt-portlet {
+    padding-bottom: 30px;
+}
+
+.kt-footer__top {
+    display: none;
+}
+
+.form-control[readonly] {
+    background-color: #f7f8fa !important;
+}

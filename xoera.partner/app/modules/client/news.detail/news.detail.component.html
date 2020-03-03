@@ -1,0 +1,31 @@
+<div class="kt-portlet kt-portlet--height-fluid kt-widget19" *ngIf="item">
+    <div class="kt-portlet__body">
+        <div class="kt-widget19__wrapper">
+            <div class="kt-widget19__content">
+                <div class="kt-widget19__userpic">
+                    <img src="../assets/media/users/default.jpg" alt="">
+                </div>
+                <div class="kt-widget19__info">
+                    <a class="kt-widget19__username">
+                        {{ item.Title }}
+                    </a>
+                    <span class="kt-widget19__time">
+                        {{ item.DateTime | date:'dd/MM/yyyy HH:mm' }}
+                    </span>
+                </div>
+                <div class="kt-widget19__stats">
+                    <span class="kt-widget19__number kt-font-brand">
+                        18
+                    </span>
+                    <a class="kt-widget19__comment">
+                        Views
+                    </a>
+                </div>
+            </div>
+            <div class="kt-widget19__text">
+                {{ item.Description }}
+            </div>
+            <div class="kt-widget19__text" [innerHTML]="item.Content | sanitizeHtml"></div>
+        </div>
+    </div>
+</div>

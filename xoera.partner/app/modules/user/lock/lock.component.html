@@ -1,0 +1,34 @@
+<div class="kt-login__signin" mvc-remove-wrapper>
+    <div class="kt-login__head">
+        <h3 class="kt-login__title">Lock Screen</h3>
+    </div>
+    <form class="kt-form">
+        <mvc-alert-component *ngIf="message" [text]="message" (closed)="closeMessage()"></mvc-alert-component>
+        <div class="lock-body">
+            <div class="row kt-login__extra">
+                <div class="col-3">
+                    <img src="../../../../assets/media/users/default.jpg" class="lock-avatar">
+                </div>
+                <div class="col-1"></div>
+                <div class="col-8">
+                    <h5>{{account.UserName}}</h5>
+                    <div class="form-group">
+                        <input class="form-control form-control-solid placeholder-no-fix" type="hidden" autocomplete="off" placeholder="Username" name="username" [(ngModel)]="item.Account">
+                        <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password" [(ngModel)]="item.Password">
+                    </div>
+                    <div class="kt-login__actions">
+                        <button id="kt_login_signin_submit" class="btn btn-primary btn-wide btn-font-lg" (click)="login()" [disabled]="processing" [ngClass]="{'kt-spinner kt-spinner--md kt-spinner--light':processing}">
+                            LogIn
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="kt-login__account">
+            <span class="kt-login__account-msg">
+                Not
+            </span>&nbsp;&nbsp;
+            <a class="kt-login__account-link" (click)="navigateSignIn()">{{account.UserName}}?</a>
+        </div>
+    </form>
+</div>

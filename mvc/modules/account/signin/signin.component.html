@@ -1,0 +1,30 @@
+<div class="kt-login__signin" mvc-remove-wrapper>
+    <div class="kt-login__head">
+        <h3 class="kt-login__title">Sign In To Admin</h3>
+    </div>
+    <form class="kt-form">
+        <mvc-alert-component *ngIf="message" [text]="message" (closed)="closeMessage()"></mvc-alert-component>
+        <div class="form-group">
+            <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username" [(ngModel)]="item.Account">
+        </div>
+        <div class="form-group">
+            <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password" [(ngModel)]="item.Password">
+        </div>
+        <div class="row kt-login__extra">
+            <div class="col">
+                <label class="kt-checkbox">
+                    <input type="checkbox" name="remember"> Remember me
+                    <span></span>
+                </label>
+            </div>
+            <div class="col kt-align-right">
+                <a id="kt_login_forgot" class="kt-login__link" (click)="navigateForgotPassword()">Forget Password ?</a>
+            </div>
+        </div>
+        <div class="kt-login__actions">
+            <button id="kt_login_signin_submit" class="btn btn-primary btn-wide btn-font-lg" (click)="login()" [disabled]="processing" [ngClass]="{'kt-spinner kt-spinner--md kt-spinner--light':processing}">
+                Sign In
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,10 @@
+.kt-portlet__body {
+    transition: 0.5s all;
+
+    &.deactive {
+        height: 0;
+        opacity: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+}

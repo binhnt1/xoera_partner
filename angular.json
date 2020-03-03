@@ -1,0 +1,130 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "xoera.partner": {
+      "root": "",
+      "prefix": "",
+      "sourceRoot": "xoera.partner",
+      "projectType": "application",
+      "schematics": {},
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "sourceMap": false,
+            "commonChunk": true,
+            "main": "xoera.partner/main.ts",
+            "outputPath": "dist/xoera.partner",
+            "index": "xoera.partner/index.html",
+            "polyfills": "xoera.partner/polyfills.ts",
+            "tsConfig": "xoera.partner/tsconfig.app.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "assets",
+                "output": "/assets"
+              },
+              {
+                "glob": "**/*",
+                "input": "xoera.partner/assets/images",
+                "output": "/assets/images"
+              },
+              {
+                "glob": "**/*",
+                "input": "xoera.partner/assets/fonts",
+                "output": "/assets/fonts"
+              },
+              {
+                "glob": "**/*",
+                "input": "assets/plugins/tinymce/skins",
+                "output": "/skins"
+              },
+              {
+                "glob": "**/*",
+                "input": "assets/plugins/tinymce/plugins",
+                "output": "/plugins"
+              },
+              {
+                "glob": "**/*",
+                "input": "assets/plugins/tinymce/themes",
+                "output": "/themes"
+              },
+              {
+                "glob": "**/*",
+                "input": "xoera.partner/vnc",
+                "output": "/vnc"
+              }
+            ],
+            "scripts": [
+              "assets/plugins/jquery/dist/jquery.min.js",
+              "assets/plugins/js-cookie/src/js.cookie.js",
+              "assets/plugins/sticky-js/dist/sticky.min.js",
+              "assets/plugins/popper.js/dist/umd/popper.min.js",
+              "assets/plugins/bootstrap/dist/js/bootstrap.min.js",
+              "assets/plugins/bootstrap-select/dist/js/bootstrap-select.js",
+              "assets/plugins/tinymce/tinymce.min.js",
+              "assets/plugins/jquery-card/jquery-card.js",
+              "assets/plugins/toastr/build/toastr.min.js",
+              "assets/plugins/select2/dist/js/select2.full.js",
+              "assets/plugins/bootstrap-phone/build/js/utils.js",
+              "assets/plugins/bootstrap-phone/build/js/intlTelInput-jquery.js",
+              "assets/plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js",
+              "assets/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js",
+              "assets/plugins/bootstrap-confirmation/dist/bootstrap-confirmation.js",
+              "assets/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.js",
+              "assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
+              "assets/plugins/bootstrap-datetime-picker/js/bootstrap-datetimepicker.min.js"
+            ],
+            "fileReplacements": [
+              {
+                "replace": "xoera.partner/environments/environment.ts",
+                "with": "xoera.partner/environments/environment.prod.ts"
+              }
+            ],
+            "styles": [
+              "node_modules/devextreme/dist/css/dx.common.css",
+              "node_modules/devextreme/dist/css/dx.light.css",
+              {
+                "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
+              }
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "xoera.partner/environments/environment.ts",
+                  "with": "xoera.partner/environments/environment.prod.ts"
+                }
+              ],
+              "aot": true,
+              "sourceMap": false,
+              "extractCss": true,
+              "vendorChunk": false,
+              "commonChunk": false,
+              "namedChunks": false,
+              "optimization": true,
+              "outputHashing": "all",
+              "buildOptimizer": true,
+              "extractLicenses": false
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "xoera.partner:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "xoera.partner:build:production"
+            }
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "xoera.partner"
+}

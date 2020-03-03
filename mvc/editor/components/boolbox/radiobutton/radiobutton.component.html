@@ -1,0 +1,42 @@
+<div *ngIf="decorator" class="radioWapper" mvc-remove-wrapper>
+        <div *ngIf="!decorator.label && !decorator.editable" class="form-view" [ngClass]="classAlign">
+            <label class="kt-radio">
+                <input type="radio" [id]="decorator.id" [(ngModel)]="object[decorator.property]" disabled="disabled">
+                <label *ngIf="decorator.description" style="padding-left: 12px;">{{ decorator.description }}</label>
+                <span></span>
+            </label>
+        </div>
+        <div *ngIf="!decorator.label && decorator.editable" class="input-group" [ngClass]="classAlign">
+            <div class="input-group" [ngClass]="{'has-error': !decorator.valid}">
+                <label class="kt-radio" [ngClass]="{'is-invalid': !decorator.valid}">
+                    <input type="radio" [id]="decorator.id" [(ngModel)]="object[decorator.property]" (ngModelChange)="valueChange()" [readonly]="decorator.readonly" [disabled]="disabled">
+                    <label *ngIf="decorator.description" style="padding-left: 12px;">{{ decorator.description }}</label>
+                    <span></span>
+                </label>
+                <span class="error" *ngIf="!decorator.valid">{{ decorator.message }}</span>
+            </div>
+        </div>
+        <div *ngIf="decorator.label && !decorator.editable" class="input-group">
+            <label class="col-form-label" [ngClass]="classLabel">{{ decorator.label }}</label>
+            <div [ngClass]="classInput">
+                <label class="kt-radio">
+                    <input type="radio" [id]="decorator.id" [(ngModel)]="object[decorator.property]" disabled="true">
+                    <label *ngIf="decorator.description" style="padding-left: 12px;">{{ decorator.description }}</label>
+                    <span></span>
+                </label>
+            </div>
+        </div>
+        <div *ngIf="decorator.label && decorator.editable" class="input-group">
+            <label class="col-form-label" [ngClass]="classLabel">{{ decorator.label }} <span class="star" *ngIf="decorator.required">*</span></label>
+            <div [ngClass]="classInput" style="display: flex; align-items: center;">
+                <div class="input-group" [ngClass]="{'has-error': !decorator.valid}">
+                    <label class="kt-radio" [ngClass]="{'is-invalid': !decorator.valid}">
+                        <input type="radio" [id]="decorator.id" [(ngModel)]="object[decorator.property]" (ngModelChange)="valueChange()" [readonly]="decorator.readonly" [disabled]="disabled">
+                        <label *ngIf="decorator.description" style="padding-left: 12px;">{{ decorator.description }}</label>
+                        <span></span>
+                    </label>
+                    <span class="error" *ngIf="!decorator.valid">{{ decorator.message }}</span>
+                </div>
+            </div>
+        </div>
+    </div>

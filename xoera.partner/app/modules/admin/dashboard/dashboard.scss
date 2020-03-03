@@ -1,0 +1,11 @@
+.kt-widget17__stats {
+    margin: -18rem auto 4rem auto;
+
+    .kt-widget17__items {
+        flex-wrap: wrap;
+
+        .kt-widget17__item {
+            min-width: calc(25% - 0.6rem);
+        }
+    }
+}

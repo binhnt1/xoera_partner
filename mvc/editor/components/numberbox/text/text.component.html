@@ -1,0 +1,34 @@
+<div *ngIf="decorator" class="textWapper" mvc-remove-wrapper>
+    <div *ngIf="!decorator.label && !decorator.editable" class="form-view" [ngClass]="classAlign">
+        {{ decorator.valueDisplay }}
+    </div>
+    <div *ngIf="!decorator.label && decorator.editable" class="input-group" [ngClass]="classAlign">
+        <div class="input-group" [ngClass]="{'has-error': !decorator.valid}">
+            <div class="input-group-prepend" *ngIf="decorator.icon">
+                <span class="input-group-text">
+                    <i [ngClass]="decorator.icon"></i>
+                </span>
+            </div>
+            <input type="text" [minlength]="decorator.min" [maxlength]="decorator.max" autocomplete="off" class="form-control" [ngClass]="{'is-invalid': !decorator.valid}" [id]="decorator.id" [placeholder]="decorator.placeholder + (decorator.required ? ' *' : '')" [readonly]="decorator.readonly" [disabled]="disabled" [(ngModel)]="object[decorator.property]" (ngModelChange)="valueChanged()" (keyup)="onKeyup()">
+            <span class="error" *ngIf="!decorator.valid">{{ decorator.message }}</span>
+        </div>
+    </div>
+    <div *ngIf="decorator.label && !decorator.editable" class="input-group">
+        <label class="col-form-label" [ngClass]="classLabel">{{ decorator.label }}</label>
+        <div [ngClass]="classInput">{{ decorator.valueDisplay }}</div>
+    </div>
+    <div *ngIf="decorator.label && decorator.editable" class="input-group">
+        <label class="col-form-label" [ngClass]="classLabel">{{ decorator.label }} <span class="star" *ngIf="decorator.required">*</span></label>
+        <div [ngClass]="classInput">
+            <div class="input-group" [ngClass]="{'has-error': !decorator.valid}">
+                <div class="input-group-prepend" *ngIf="decorator.icon">
+                    <span class="input-group-text">
+                        <i [ngClass]="decorator.icon"></i>
+                    </span>
+                </div>
+                <input type="text" [minlength]="decorator.min" [maxlength]="decorator.max" class="form-control" [ngClass]="{'is-invalid': !decorator.valid}" [id]="decorator.id" [placeholder]="decorator.placeholder" [readonly]="decorator.readonly" [disabled]="disabled" [(ngModel)]="object[decorator.property]" (ngModelChange)="valueChanged()" (keyup)="onKeyup()">
+                <span class="error" *ngIf="!decorator.valid">{{ decorator.message }}</span>
+            </div>
+        </div>
+    </div>
+</div>

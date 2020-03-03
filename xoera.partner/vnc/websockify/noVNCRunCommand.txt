@@ -1,0 +1,1 @@
+sc create "WebsocketServer" binPath="D:\Coding\Git\xoera_partner\projects\xoera.partner\vnc\websockify\noVNCWebsocketService.exe" DisplayName="WebsocketServer"

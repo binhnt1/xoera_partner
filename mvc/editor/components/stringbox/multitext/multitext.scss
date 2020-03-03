@@ -1,0 +1,24 @@
+/deep/ .tox-tinymce {
+    width: 100%;
+    box-shadow: none !important;
+    border-radius: 4px !important;
+    border: 1px solid #ebedf2 !important;
+
+    .tox-toolbar, .tox-edit-area, .tox-statusbar {
+        box-shadow: none !important;
+        border-color: #ebedf2 !important;
+        border-width: 1px 0 0 0 !important;
+    }
+
+    .tox-toolbar__group {
+        border-color: #ebedf2 !important;
+    }
+
+    .tox-statusbar__branding {
+        display: none !important;
+    }
+}
+
+.btn {
+    min-width: 120px;
+}
